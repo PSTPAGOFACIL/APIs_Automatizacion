@@ -1,0 +1,64 @@
+#Este es el modelo a usar para configurar correctamente Travis
+#No olvides solicitar al Devops que configure las credenciales en el repositorio para que funcione
+#Cambia el nombre de este archivo por .travis.yml y listo!!
+language: node_js
+node_js:
+  - 12
+
+notifications:
+  slack:
+    if: branch = dev OR branch = qa OR branch = master
+    rooms:
+      - pstpagofacil:imJBMNuA0asH2z29Q2Egyy56#travis-ci
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - echo "INSTALL GLOBAL DEPENDENCIES"
+  - npm install -g serverless
+  - echo "BEFORE INSTALL - ADD PRIVATE REPO"
+  - npm config set registry https://npm.pkg.github.com/pstpagofacil
+  - echo "GENERATING AUTH"
+  - echo //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN > .npmrc
+
+install:
+  - echo "INSTALL"
+  - npm install
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo 'Probando el Código'
+        - npm test
+    - stage: deploy2Craft
+      script:
+        - sls deploy --stage craft
+    - stage: deploy2Dev
+      script:
+        - sls deploy --stage dev
+    - stage: deploy2Qa
+      script:
+        - sls deploy --stage qa
+    - stage: deploy2Prod
+      script:
+        - sls deploy --stage beta
+        - sls deploy --stage prod
+stages:
+  #Cualquier push genera que se ejecuten las pruebas por el momento.
+  - name: test
+    if: type = pull_request
+  #Se pasa a craft si el pull request a develop fue aceptado
+  - name: deploy2Craft
+    if: type = push AND branch = craft
+  #Se pasa a Dev si el pull request a dev fue aceptado
+  - name: deploy2Dev
+    if: type = push AND branch = dev
+  #Se pasa a Dev si el pull request a qa fue aceptado
+  - name: deploy2Qa
+    if: type = push AND branch = qa
+  #Se pasa a prod si el pull request a master fue aceptado
+  - name: deploy2Prod
+    if: type = push AND branch = master
