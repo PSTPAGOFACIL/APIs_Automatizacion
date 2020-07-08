@@ -1,6 +1,3 @@
-#Este es el modelo a usar para configurar correctamente Travis
-#No olvides solicitar al Devops que configure las credenciales en el repositorio para que funcione
-#Cambia el nombre de este archivo por .travis.yml y listo!!
 language: node_js
 node_js:
   - 12
