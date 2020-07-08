@@ -1,0 +1,1437 @@
+{
+	"info": {
+		"_postman_id": "fcf9073f-ab8d-4072-8c6e-5b5c3700de31",
+		"name": "API nullification / Anular transacciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GenerarTokenJuridico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac8a269e-5629-4c6a-90af-72cee67cc7de",
+						"exec": [
+							"//Pasar token a variable Global",
+							"let jsondata = pm.response.json();",
+							"pm.globals.set(\"TokenAlexUser\", jsondata.data.access_token_jwt);",
+							"let estado = pm.response.code;",
+							"console.log(estado);",
+							"",
+							"//Validar que codigo sea el requerido",
+							"pm.test(\"CP_001_Generar Token | Se requiere: Status 200 | valor obtenido: \" + estado, function () {",
+							"    pm.expect(estado).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"alexander.cabrera@kibernum.com\",\n    \"password\": \"Ignacio2020*\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/users/login?",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"users",
+						"login"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GenerarToken_OtherUser_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "78de0b42-d802-442e-b7ab-88c23ba36a2f",
+						"exec": [
+							"//Pasar token a variable Global",
+							"let jsondata = pm.response.json();",
+							"pm.globals.set(\"Token_OtherUser_2\",jsondata.data.access_token_jwt);",
+							"",
+							"let estado = pm.response.code;",
+							"console.log(estado);",
+							"",
+							"//Validar que codigo sea el requerido",
+							"pm.test(\"CP_001_Generar Token | Se requiere: Status 200 | valor obtenido: \"+estado, function () {",
+							"    pm.expect(estado).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"stephanie@pagofacil.cl\",\n    \"password\": \"Stephanie000.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/users/login?",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"users",
+						"login"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREAR TXN CRAFT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e26f7c9-0fde-4016-a887-1f707f782297",
+						"exec": [
+							"//Pasar id a variable Global",
+							"let jsondata = pm.response.json();",
+							"pm.globals.set(\"id\", jsondata.data.id);",
+							"",
+							"let estado = pm.response.code;",
+							"console.log(estado);",
+							"pm.test(\"Crear TXN envía correo |Se requiere 200 | Valor obtenido: \"+estado, function () {",
+							"    pm.expect(estado).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TokenAlexUser}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"tipo\": \"link\",\r\n\t\"idServicio\": 3071,\r\n\t\"monto\": 45000,\r\n\t\"email\": \"alexander.cabrera@kibernum.com\",\r\n\t\"mensaje_receptor\": \"PRUEBA CREAR COBRO\",\r\n\t\"nota_interna\": \"CREAR ORDEN EN DEV\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/charges",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"charges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREAR TXN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "478eba45-336b-4abc-925d-18d5b64264c9",
+						"exec": [
+							"//Pasar id a variable Global",
+							"let jsondata = pm.response.json();",
+							"pm.globals.set(\"id\", jsondata.data.id);",
+							"",
+							"pm.test(\"Contiene Monto\", function () {",
+							"     var jsondata = pm.response.json();",
+							"    pm.expect(jsondata.data.monto).to.eql(pm.iterationData.get(\"monto\"));",
+							"});",
+							"",
+							"pm.test(\"Contiene idServicio\", function () {",
+							"     var jsondata = pm.response.json();",
+							"    pm.expect(jsondata.data.idServicio).to.eql(pm.iterationData.get(\"idServicio\"));",
+							"});",
+							"",
+							"pm.test(\"Valido que se crea TXN con estado Pendiente\", function () {",
+							"       pm.expect(jsondata.data.estado).to.eql(\"PENDIENTE\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TokenAlexUser}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"tipo\": \"link\",\r\n\t\"idServicio\": {{idServicio}},\r\n\t\"monto\": {{monto}},\r\n\t\"email\": \"alexander.cabrera@kibernum.com\",\r\n\t\"mensaje_receptor\": \"PRUEBA CREAR COBRO\",\r\n\t\"nota_interna\": \"CREAR ORDEN EN DEV\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/charges",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"charges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d4c2f25-776f-49b3-bd6a-4ffbb33a04a8",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial | Se requiere mensaje: La anulación se encuentra en proceso | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La anulación se encuentra en proceso\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 50,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/{{IdTrx1}}/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"{{IdTrx1}}",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial Pago Débito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51d7d863-f14e-4e21-92ee-5b26f309590c",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial Pago Débito | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial Pago Débito | Se requiere mensaje: La Trx no es de crédito | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La Trx no es de crédito\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 20,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/{{IdTrx2}}/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"{{IdTrx2}}",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total Pago Débito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "81b1e477-7c53-47c4-831d-c64bf9301ac3",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total Pago Débito | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial Pago Débito | Se requiere mensaje: La Trx no es de crédito | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La Trx no es de crédito\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 10000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/{{IdTrx3}}/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"{{IdTrx3}}",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial pago en cuotas sin interés",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a0fe607-32da-4bbe-b8eb-f9e85e7430c9",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial pago en cuotas | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial pago en cuotas | Se requiere mensaje: La transacción no se puede anular parcialmente | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La transacción no se puede anular parcialmente\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 200,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275290/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275290",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total pago en cuotas sin interés Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cee77447-a30e-48d1-9a1c-2a502a4db556",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial pago en cuotas | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial | Se requiere mensaje: La anulación se encuentra en proceso | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La anulación se encuentra en proceso\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 200,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275289/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275289",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial ya anulada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d65beeed-993b-449f-b89e-a2b5d9d1c689",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial ya anulada | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial ya anulada | Se requiere mensaje: Transacción ya se encuentra anulada | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Transacción ya se encuentra anulada\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 19000,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275257/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275257",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial no completada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e96ca6eb-94c0-4184-8f8a-3ea79e0a2e64",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial no completada | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial no completada | Se requiere mensaje: Transacción no esta completada | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Transacción no esta completada\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 3000,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/{{id}}/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"{{id}}",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total no completada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95a554e0-92e6-4304-bd2b-178e1679c239",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total no completada | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total no completada | Se requiere mensaje: Transacción no esta completada | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Transacción no esta completada\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 3000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/{{id}}/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"{{id}}",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e376a2ca-468d-4e85-9ad9-a3bed44718ea",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total | Se requiere mensaje: La anulación se encuentra en proceso | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La anulación se encuentra en proceso\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 105000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275224/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275224",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total ya anulada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49b339b7-2aff-4363-a0a6-9c522667a80c",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total ya anulada | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total ya anulada | Se requiere mensaje: Transacción ya se encuentra anulada | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Transacción ya se encuentra anulada\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 105000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275224/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275224",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial con más de 90 días",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d03b56e-724d-4619-b9ce-49106b0c9f99",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial con más de 90 días | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial con más de 90 días | Se requiere mensaje: La Trx tiene más de 90 días | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La Trx tiene más de 90 días\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{Token_OtherUser_2}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 10,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51274909/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51274909",
+						"nullification"
+					]
+				},
+				"description": "Se debe generar botón de cobro y hacer el pago. Luego se puede anular la txn"
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total con más de 90 días",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "240943b3-f3f3-4a47-89ac-ca87f4e3d819",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total con más de 90 días | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total con más de 90 días | Se requiere mensaje: La Trx tiene más de 90 días | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La Trx tiene más de 90 días\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{Token_OtherUser_2}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 100000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51274920/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51274920",
+						"nullification"
+					]
+				},
+				"description": "Se debe generar botón de cobro y hacer el pago. Luego se puede anular la txn"
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial con menos de 48 horas de completada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6ca71c5-f671-48b2-a832-090715d4619e",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial con menos de 48 horas de completada | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial con menos de 48 horas de completada | Se requiere mensaje: Transacciones pueden ser anuladas 48hrs hábiles después de haber sido completadas | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Transacciones pueden ser anuladas 48hrs hábiles después de haber sido completadas\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 500,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275547/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275547",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total con menos de 48 horas de completada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d2a5575-45ef-46c5-bb3e-a7a342b320c0",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total con menos de 48 horas de completada | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total con menos de 48 horas de completada | Se requiere mensaje: Transacciones pueden ser anuladas 48hrs hábiles después de haber sido completadas | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Transacciones pueden ser anuladas 48hrs hábiles después de haber sido completadas\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 300000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275547/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275547",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN con datos nulos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bd85320-e4f8-4e5e-ad2e-5ad69bad22a5",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN con tados nulos | Se requiere: Status 422 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(422);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN con tados nulos | Se requiere mensaje: Invalid request body | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"Invalid request body\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 0,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275261/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275261",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Parcial pago en cuotas con intereses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "685041b5-c59e-414c-9df3-a12a66fde03a",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial pago en cuotas con intereses | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial pago en cuotas | Se requiere mensaje: La transacción no se puede anular parcialmente | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La transacción no se puede anular parcialmente\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 100,\n    \"type\": \"parcial\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275290/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275290",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Anular TXN Total pago en cuotas con intereses Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9b93c25-777a-4943-b3bc-231f04f910f3",
+						"exec": [
+							"let jsondata = pm.response.json();\r",
+							"\r",
+							"let estado = pm.response.code;\r",
+							"console.log(estado);\r",
+							"\r",
+							"pm.test(\"Anular TXN Parcial pago en cuotas con intereses | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+							"    pm.expect(estado).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"let MensajeError = jsondata.message;\r",
+							"console.log(MensajeError);\r",
+							"\r",
+							"pm.test(\"Anular TXN Total pago en cuotas con intereses | Se requiere mensaje: La anulación se encuentra en proceso | valor obtenido: \" + MensajeError, function () {\r",
+							"    pm.expect(MensajeError).to.eql(\"La anulación se encuentra en proceso\");\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 20000,\n    \"type\": \"total\",\n    \"nullifyTbk\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275289/nullification",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275289",
+						"nullification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET consultar orden Craft",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "121673f9-4ce6-41d6-81d7-3b34614c679e",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"let estado = pm.response.code;",
+							"console.log(estado);",
+							"pm.test(\"ENVIO CORREO |Se requiere 200| Valor obtenido: \" + estado, function () {",
+							"    pm.expect(estado).to.eql(200);",
+							"});",
+							"",
+							"let error = jsonData.message;",
+							"console.log(error);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{TokenAlexUser}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_CRAFT}}/trxs/51275219",
+					"host": [
+						"{{URL_CRAFT}}"
+					],
+					"path": [
+						"trxs",
+						"51275219"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8aab5217-b869-4e2d-99d6-8859e0b761a8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f7654fda-432c-47f7-bcb0-db035327933b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "df477c58-953c-40da-bdc5-bbd626816a15",
+			"key": "Protocol",
+			"value": "https"
+		},
+		{
+			"id": "f9c917f2-f4da-46bc-88ae-4f7f95377530",
+			"key": "Address_Craft",
+			"value": "x.pagofacil.online"
+		},
+		{
+			"id": "469d0b3a-66a2-44d5-be89-b2334a88b7e5",
+			"key": "URL_CRAFT",
+			"value": "{{Protocol}}://{{Address_Craft}}"
+		},
+		{
+			"id": "6f4a4ac9-7099-4c8a-80e7-bb261f4c82de",
+			"key": "Address_Api_Token",
+			"value": "apis.pagofacil.xyz"
+		},
+		{
+			"id": "6498663e-5404-4a2a-875b-a5f2ec3d1df6",
+			"key": "URL_ApiToken",
+			"value": "{{Protocol}}://{{Address_Api_Token}}"
+		},
+		{
+			"id": "c6811054-6ac2-486d-80b4-8f442820676b",
+			"key": "Address_CompletarOrden",
+			"value": "uzotywpg3a.execute-api.us-west-2.amazonaws.com"
+		},
+		{
+			"id": "4e98d4dd-1806-4f8b-8453-21bfe35348a3",
+			"key": "URL_CompletarOrden",
+			"value": "{{Protocol}}://{{Address_CompletarOrden}}"
+		},
+		{
+			"id": "8a8eb345-0c27-47e5-922a-9d2bcf99a66b",
+			"key": "Address_RegistroUser",
+			"value": "v2.api.pagofacil.online"
+		},
+		{
+			"id": "cb52b2e7-94d3-4f52-9e07-9099a6628f01",
+			"key": "URL_CRAFT_Registro",
+			"value": "{{Protocol}}://{{Address_RegistroUser}}"
+		},
+		{
+			"id": "5286dd94-d736-4288-8dda-8fb1feb11837",
+			"key": "idServicio",
+			"value": "3071"
+		},
+		{
+			"id": "e104d41b-3093-48b5-bce4-3b01c1b64967",
+			"key": "monto",
+			"value": "5000"
+		},
+		{
+			"id": "cdf8dbf2-0d40-4bfc-8e6c-540285ddd835",
+			"key": "IdTrx1",
+			"value": "51275261"
+		},
+		{
+			"id": "622b0d94-5c00-4d71-867d-e4efb4a11d42",
+			"key": "IdTrx2",
+			"value": "51275262"
+		},
+		{
+			"id": "6f171549-f574-4f07-8d0a-0e8efcc8015f",
+			"key": "IdTrx3",
+			"value": "51275287"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
