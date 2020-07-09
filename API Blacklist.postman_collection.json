@@ -1,0 +1,1741 @@
+{
+	"info": {
+		"_postman_id": "8e7c0dda-d17e-4e6d-9532-5e76de64932f",
+		"name": "API Blacklist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Utilidad",
+			"item": [
+				{
+					"name": "LOGIN_CRAFT_ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cdd55beb-f928-4b0e-a5c7-588355786c79",
+								"exec": [
+									"//Pasar token a variable Global",
+									"let jsondata = pm.response.json();",
+									"pm.globals.set(\"Token_AlexUser\",jsondata.data.access_token_jwt);",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"",
+									"//Validar que codigo sea el requerido",
+									"pm.test(\"Login Dev | Se requiere: Status 200 | valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"alexander.cabrera@kibernum.com\",\n    \"password\": \"Ignacio2020*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/users/login",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN_CRAFT_NO_ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fb3dd83-9495-4b31-8c85-6b548f8aac6d",
+								"exec": [
+									"//Pasar token a variable Global",
+									"let jsondata = pm.response.json();",
+									"pm.globals.set(\"Token_UserNoAdmin\",jsondata.data.access_token_jwt);",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"",
+									"//Validar que codigo sea el requerido",
+									"pm.test(\"Login Dev | Se requiere: Status 200 | valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{Token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"usuarionoadmin2@yopmail.com\",\n    \"password\": \"PruebasBL1*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/users/login",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN_CRAFT_NO_ADMIN_2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "02ea45b5-9031-4e4d-a9a4-2ace158da68a",
+								"exec": [
+									"//Pasar token a variable Global",
+									"let jsondata = pm.response.json();",
+									"pm.globals.set(\"Token_UserNoAdmin_2\",jsondata.data.access_token_jwt);",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"",
+									"//Validar que codigo sea el requerido",
+									"pm.test(\"Logueo con usuario no Admin a función | Se requiere: Status 200\"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"pagofacil3@yopmail.com\",\n    \"password\": \"Pagofacil1*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/users/login",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar RUTs en lista negra asociandos a un Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f8a74d7-6b3e-4e9c-8070-66ea482f89e0",
+								"exec": [
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"let error = pm.response.code;\r",
+									"console.log(error);\r",
+									"//Validar que codigo sea el requerido\r",
+									"pm.test(\"Buscar RUTs en lista negra asociandos a un Id | Se requiere: Status 200 | valor obtenido: \"+estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/getById/38a13380-d7cb-4f6e-a44f-6d1deaf97424",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"getById",
+								"38a13380-d7cb-4f6e-a44f-6d1deaf97424"
+							]
+						},
+						"description": "Se requiere usuario Admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Como usuario no admin accedo a la funcion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a5c9a9a-532a-4fe4-8468-f4818692e8ed",
+								"exec": [
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"let error = pm.response.code;\r",
+									"console.log(error);\r",
+									"//Validar que codigo sea el requerido\r",
+									"pm.test(\"Como usuario no admin accedo a la funcion | Se requiere: Status 403 | valor obtenido: \"+estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valido respuesta (User doesn't exist or doesn't have permissions)\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"User doesn't exist or doesn't have permissions\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_UserNoAdmin}}"
+							}
+						],
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/getById/3d0d2fa8-deec-4e21-abf9-d21c2ffad423",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"getById",
+								"3d0d2fa8-deec-4e21-abf9-d21c2ffad423"
+							]
+						},
+						"description": "Se requiere usuario Admin"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Usuario en lista negra no puede loguearse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d4480d9-d430-4701-88a9-0a068de82e1b",
+								"exec": [
+									"let jsondata = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Usuario en BlackList no puede loguearse | Se requiere: Status 401 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(401);",
+									"});",
+									"",
+									"let error = jsondata.errors;",
+									"console.log(error);",
+									"",
+									"pm.test(\"Se valida mensaje de respuesta | Valor esperado: Nombre de usuario o contraseña invalidos\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Nombre de usuario o contraseña invalidos\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"maria.paredes@yopmail.com\",\n    \"password\": \"Pruebas123*\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/users/login",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Para ello se requiere contar con un usuario que se encuentre en Lista negra"
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario que sale de lista negra o no esta puede loguearse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6269562-e82e-4854-b416-0525722c3f48",
+								"exec": [
+									"let jsondata = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Usuario que sale de lista negra o no esta puede loguearse | Se requiere: Status 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});",
+									"",
+									"let error = jsondata.message;",
+									"console.log(error);",
+									"pm.test(\"Usuario que sale de lista negra o no esta puede loguearse | Se requiere mensaje: Se proceso la solicitud correctamente | Valor obtenido: \"+error, function () {",
+									"    pm.expect(error).to.eql(\"Se proceso la solicitud correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"username\":\"stephanie@pagofacil.cl\",\r\n        \"password\":\"Stephanie000.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/users/login",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Para ello se requiere contar con un usuario que NO se encuentre en Lista negra"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SAVE",
+			"item": [
+				{
+					"name": "Se intenta agregar RUT Inválido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "906efea3-319d-47b6-a5df-9643e988c758",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se intenta agregar RUT Inválido | Se requiere Status: 422 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(422);",
+									"});",
+									"",
+									"pm.test(\"Valido mensaje Rut Inválido\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Invalid rut\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Paola\",\n    \"document\": \"25456432-8\",\n    \"country\": \"CL\",\n    \"description\":\"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Se agrega rut valido que no tiene usuarios vinculados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2e4f38b6-76d3-4802-8ce3-6cdbe8edc056",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se intenta agregar RUT Inválido | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});",
+									"",
+									"pm.test(\"Se valida que arreglo esta vacio\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect([]).to.eql([]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ignacio\",\n    \"document\": \"27187851-6\",\n    \"country\": \"CL\",\n    \"description\": \"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Se agrega un rut valido con usuarios vinculados por cuentas bancarias",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "decfa38d-e55a-4d0f-bce8-056c98f059e8",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se agrega un rut valido con usuarios vinculados por cuentas bancarias | Se requiere Status: 200 | Valor obtenido: \" + estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Paola\",\n    \"document\": \"26099055-1\",\n    \"country\": \"CL\",\n    \"description\": \"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Se agrega un rut valido con usuarios vinculados por datos de facturación",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ab06cc5-14fe-4b9c-aa38-71c4e9ff62b0",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se agrega un rut valido con usuarios vinculados por datos de facturación | Se requiere Status: 200 | Valor obtenido: \" + estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pruebas DF1\",\n    \"document\": \"18081596-1\",\n    \"country\": \"CL\",\n    \"description\": \"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Se agrega un rut valido con usuarios vinculados por datos de facturacion (representante legal)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ccc7827b-831e-4194-a41a-6066270eb03a",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se agrega un rut valido con usuarios vinculados por datos de facturacion (representante legal) | Se requiere Status: 200 | Valor obtenido: \" + estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Valido valor esperado en un arreglo\", function () {",
+									"       pm.expect([\"google-oauth2|117017900335916307528\"]).to.be.include(\"google-oauth2|117017900335916307528\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Paola\",\n    \"document\": \"17317062-9\",\n    \"country\": \"CL\",\n    \"description\": \"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Se agrega un rut valido con usuarios vinculados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf2a7872-8c8c-40ba-b20e-5ff09a0803d2",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se agrega un rut valido con usuarios vinculados | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Paola\",\n    \"document\": \"25272254-8\",\n    \"country\": \"CL\",\n    \"description\": \"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Verificar Persona Natural",
+			"item": [
+				{
+					"name": "Un usuario (juridico o natural) en lista negra se registra, pero no pasa validacion TOC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7b2f7cde-680e-4f1b-ab3c-ca5b3e5b1107",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Un usuario (juridico o natural) en lista negra se registra, pero no pasa validacion TOC | Se requiere Status: 200 | Valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"let error = jsondata.errors;\r",
+									"console.log(error);\r",
+									"pm.test(\"Valido rechazo de la validación | Valor obtenido: \"+error, function () {\r",
+									"    pm.expect(error).to.match(/^Usuario rechazado/);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJCMGVxMzlrZUFFQmJZMHRNa243aCtyaXJtQ1BWT3pkRTA0WHpuTzhOTkI0PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3Nzg3ZTE3YS1jZTdmLTQ0YjMtODFiNy1hOTgzOGE3YjFkMjgiLCJjb2duaXRvOmdyb3VwcyI6WyJhZG1pbiIsInNlYmFzdGlhbiJdLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLXdlc3QtMi5hbWF6b25hd3MuY29tXC91cy13ZXN0LTJfSlEyRVRZMDhNIiwiY3VzdG9tOnVzZXJfaWQiOiJnb29nbGUtb2F1dGgyfDEwOTQyODY2MjA5NDMxMTIzNTczMCIsImNvZ25pdG86dXNlcm5hbWUiOiI3Nzg3ZTE3YS1jZTdmLTQ0YjMtODFiNy1hOTgzOGE3YjFkMjgiLCJhdWQiOiI3N3NrbHNqczEzYXBwcXUxOTNpZWxnbms5NSIsImV2ZW50X2lkIjoiMjkyNGY0MjQtNmU5NC00M2MxLTk4YjAtNzQ4MmMxNjI0MzExIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE1ODk0NzAxNTQsImV4cCI6MTU4OTQ3Mzc1NCwiaWF0IjoxNTg5NDcwMTU0LCJlbWFpbCI6InN0ZXBoYW5pZUBwYWdvZmFjaWwuY2wifQ.ReO3jsHDLTOvO2FiIWMQ06JTwnLms3dWHWXOoAhD9PdPJHU4xb3JmzaEB1Of8y0ZoI1oxmnIpz-2oo3PT4VTmQK7CpqcZvzXl7W6Q1AiZaUQomovLG5_HHDJMsRRM_tHgEC7AABPxoMFXenZQBdcOhjhawwtSGsXPi77UiGmJseO138zo4L7hnKBr6pbvicX1yHiBLWWyo0gK2AwAEKGYp3FcAQg4vTF8h5GWBPKdaXjPenb30C4isOZI8v7K3dYqOq03PjVmz8PxGg7HzfbI8qREsDbdhshNseWjK_W073NSeyBLnU4WmV8qmLPj_nAiLCb7SK-fGR6T2SYcHxTZw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"id_front\" : \"6358/6358_front.jpg\",\r\n \"id_back\" : \"6358/6358_back.jpg\",\r\n \"selfie\" : \"6358/6358_selfie.jpg\",\r\n \"documentType\" : \"CHL2\",\r\n \"tipoUsuario\" : \"comercio\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://v2.api.pagofacil.online/users/verifyperson",
+							"protocol": "https",
+							"host": [
+								"v2",
+								"api",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"verifyperson"
+							]
+						},
+						"description": "Usuario Paola"
+					},
+					"response": []
+				},
+				{
+					"name": "Un usuario (juridico o natural) que sale de lista negra o no esta, se registra y pasa validacion TOC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "472114a6-a108-44cf-89ab-e1bba09b08b8",
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Un usuario (juridico o natural) que sale de lista negra o no esta, se registra y pasa validacion TOC | Se requiere Status: 200 | Valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"id_front\" : \"6385/6385_front.jpg\",\r\n \"id_back\" : \"6385/6385_back.jpg\",\r\n \"selfie\" : \"6385/6385_selfie.jpg\",\r\n \"documentType\" : \"CHL2\",\r\n \"tipoUsuario\" : \"comercio\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://v2.api.pagofacil.online/users/verifyperson",
+							"protocol": "https",
+							"host": [
+								"v2",
+								"api",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"verifyperson"
+							]
+						},
+						"description": "Usuario Alexander"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Como usuario no admin accedo a la funcion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecf6053c-9119-4d77-820a-5765dadd289d",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Como usuario no admin accedo a la funcion | Se requiere Status: 403 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token_UserNoAdmin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"document\": \"25272254-8\",\n    \"country\": \"CL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/delete",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Como usuario admin elimino un rut que no tiene usuarios vinculados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "508bfba3-7c43-495f-9b42-609893d494aa",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Como usuario admin elimino un rut que no tiene usuarios vinculados | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});",
+									"",
+									"pm.test(\"Valido que no tenga usuarios vinculados\", function () {",
+									"       pm.expect([]).to.eql([]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"document\": \"27187851-6\",\n    \"country\": \"CL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/delete",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Como usuario admin elimino un rut  tiene usuarios vinculados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ae1f4a2-281f-4da9-9e7a-7baf0e9a70a1",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Como usuario admin elimino un rut  tiene usuarios vinculados | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"document\": \"25272254-8\",\n    \"country\": \"CL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/delete",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Como usuario admin elimino un rut  tiene usuarios vinculados  por datos de facturación",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5573b96b-ed9c-4448-afd7-e72799ca1ea1",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Como usuario admin elimino un rut  tiene usuarios vinculados  por datos de facturación | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"document\": \"18081596-1\",\n    \"country\": \"CL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/delete",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GET Busqueda de usuarios en Blacklist",
+			"item": [
+				{
+					"name": "Se obtienen ruts en lista negra de un pais",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "450a0f4f-4575-4622-ad1f-0bcbd1e8e607",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"CP_004_Como usuario admin agrego un rut valido con usuarios vinculados | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/get/CL",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"get",
+								"CL"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Verificación Persona Jurídica SII",
+			"item": [
+				{
+					"name": "Se agrega rut Jurídico a blacklist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a9d0f9b-6579-4650-bff8-73dd75f5e72d",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se agrega rut Jurídico a blacklist | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"RUT PagoFácil\",\n    \"document\": \"76804564-K\",\n    \"country\": \"CL\",\n    \"description\": \"prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/save",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Un rut empresa que esta en lista negra intenta culminar el registro, pero no pasa la validacion SII",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e495bd9-07b2-4c55-9de7-c29483737612",
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Un rut empresa que esta en lista negra intenta culminar el registro, pero no pasa la validacion SII | Se requiere Status: 403 | Valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let message = jsonData.message\r",
+									"console.log(message)\r",
+									"\r",
+									"pm.test(\"Se valida mensaje esperado | Respuesta esperada: Usuario rechazado\", function () {\r",
+									"        pm.expect(message).to.eql(\"Usuario rechazado\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"Q2xhdmVVcmJhbg==2\",\n    \"tipoUsuario\": \"comercio\",\n    \"rut\": \"76804564-K\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://v2.api.pagofacil.online/users/verifycompany",
+							"protocol": "https",
+							"host": [
+								"v2",
+								"api",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"verifycompany"
+							]
+						},
+						"description": "La contraseña debe estar codificada"
+					},
+					"response": []
+				},
+				{
+					"name": "Se elimina RUT jurídico de Blacklist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "627b7251-34c0-4308-a56a-6dd1f013c51c",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"let estado = pm.response.code;",
+									"console.log(estado);",
+									"pm.test(\"Se elimina RUT jurídico de Blacklist ok | Se requiere Status: 200 | Valor obtenido: \"+estado, function () {",
+									"    pm.expect(estado).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"document\": \"76804564-K\",\n    \"country\": \"CL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/delete",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Validación Se  busca los user_meta de un usuario que no haya sido validado por SII por estar en lista negra",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idUsuario\": \"6421\",\n    \"tipoUsuario\": \"comercio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api-front-craft.pagofacil.online/users/getValidaciones",
+							"protocol": "https",
+							"host": [
+								"api-front-craft",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"getValidaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Un rut empresa que no esta en lista negra intenta culminar el registro, tiene los datos correctos y pasa la validacion SII",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91fb1420-9f9d-46c4-8154-dd6088251364",
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Un rut empresa que no esta en lista negra intenta culminar el registro, tiene los datos correctos y pasa la validacion SII: 200 | Valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"let message = jsonData.message\r",
+									"console.log(message)\r",
+									"\r",
+									"pm.test(\"Se valida mensaje esperado | Respuesta esperada: Enviado exitosamente al sqs\", function () {\r",
+									"        pm.expect(message).to.eql(\"Enviado exitosamente al sqs\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"Q2xhdmVVcmJhbg==2\",\n    \"tipoUsuario\": \"comercio\",\n    \"rut\": \"76804564-K\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://v2.api.pagofacil.online/users/verifycompany",
+							"protocol": "https",
+							"host": [
+								"v2",
+								"api",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"verifycompany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Validación user_meta de un usuario que haya sido validado por SII por no estar en lista negra",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idUsuario\": \"6425\",\n    \"tipoUsuario\": \"comercio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api-front-craft.pagofacil.online/users/getValidaciones",
+							"protocol": "https",
+							"host": [
+								"api-front-craft",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"getValidaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Un rut de representante legal de la empresa que esta en lista negra intenta culminar el registro, pero no pasa la validacion SII",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c664d3a1-8af1-4371-8636-ab4d25ddd2e4",
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Un rut empresa que no esta en lista negra intenta culminar el registro, tiene los datos correctos y pasa la validacion SII: 200 | Valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token_AlexUser}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"Q2xhdmVVcmJhbg==2\",\n    \"tipoUsuario\": \"comercio\",\n    \"rut\": \"76804564-K\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://v2.api.pagofacil.online/users/verifycompany",
+							"protocol": "https",
+							"host": [
+								"v2",
+								"api",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"verifycompany"
+							]
+						},
+						"description": "Se requiere que el Token corresponda al usuario que realiza la validación. De lo contrario se realiza bloqueo de usuario con el que se realizo la solicitud de Login para la validación en SII"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Validación user_meta de un usuario que haya sido validado por SII por estar en lista negra Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idUsuario\": \"6421\",\n    \"tipoUsuario\": \"comercio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api-front-craft.pagofacil.online/users/getValidaciones",
+							"protocol": "https",
+							"host": [
+								"api-front-craft",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"getValidaciones"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get By Rut",
+			"item": [
+				{
+					"name": "Buscar RUT que no esta en lista negra",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0da379f0-8fd6-4ef0-a07c-f94ff0404bf1",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Buscar RUT que no esta en lista negra | Se requiere: Status 200 | Valor obtenido: \"+estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/getByRut/25272254-8/CL",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"getByRut",
+								"25272254-8",
+								"CL"
+							]
+						},
+						"description": "Se requiere usuario Admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar RUT que esta en lista negra",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3765ad0e-fda7-4aff-b36f-c74d61764ef2",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"pm.test(\"Buscar RUT que esta en lista negra | Se requiere: Status 200 | Valor obtenido: \"+estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{Token_AlexUser}}"
+							}
+						],
+						"url": {
+							"raw": "{{URL_CRAFT}}/black-list/getByRut/25272254-8/CL",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"black-list",
+								"getByRut",
+								"25272254-8",
+								"CL"
+							]
+						},
+						"description": "Se requiere usuario Admin"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Validación Usuario",
+			"item": [
+				{
+					"name": "Se  busca los user_meta de un usuario que no haya sido validado por SII por estar en lista negra",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJCMGVxMzlrZUFFQmJZMHRNa243aCtyaXJtQ1BWT3pkRTA0WHpuTzhOTkI0PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3Nzg3ZTE3YS1jZTdmLTQ0YjMtODFiNy1hOTgzOGE3YjFkMjgiLCJjb2duaXRvOmdyb3VwcyI6WyJhZG1pbiIsInNlYmFzdGlhbiJdLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLXdlc3QtMi5hbWF6b25hd3MuY29tXC91cy13ZXN0LTJfSlEyRVRZMDhNIiwiY3VzdG9tOnVzZXJfaWQiOiJnb29nbGUtb2F1dGgyfDEwOTQyODY2MjA5NDMxMTIzNTczMCIsImNvZ25pdG86dXNlcm5hbWUiOiI3Nzg3ZTE3YS1jZTdmLTQ0YjMtODFiNy1hOTgzOGE3YjFkMjgiLCJhdWQiOiI3N3NrbHNqczEzYXBwcXUxOTNpZWxnbms5NSIsImV2ZW50X2lkIjoiM2Q5NmNkMTctZDk0Yi00MjU0LTkwNTgtNjg0NDQxNTJlMzlhIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE1ODk0ODE5MjQsImV4cCI6MTU4OTQ4NTUyNCwiaWF0IjoxNTg5NDgxOTI0LCJlbWFpbCI6InN0ZXBoYW5pZUBwYWdvZmFjaWwuY2wifQ.CCATnqS2Kl7kZHc0CdJZ1gVEFVpfL8Jm_1ymNXrfhysXqKbn51KS_bPxd7-4Ika4r3niNvso8dYq7w4CmqQTfa_z68aSPGYXcwelDt0iEJEN-LlZfu3IUS-ZyndSydmUGlwjRC_BDxx1h0KLmxbuTwMloGqNnJv4dGiglt1JtUugc5htB9ENKAWFJmVnn-zXKr0pSB_SPP_mSDyI8lEtVhu4j-_cye8z-wl6zFfPGt8ciIN9x7Gb3Vu5pBlmp_Y90f4L8TpoOdtYyJbJwmCPz5OmkrLeadHeov4YL7f3IfMPo3QwjdvMr6V0NmhpCzOhtbjPX27dlkDUy68TvrAvCg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TokenAlexUser}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idUsuario\": \"6421\",\n    \"tipoUsuario\": \"comercio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api-front-craft.pagofacil.online/users/getValidaciones",
+							"protocol": "https",
+							"host": [
+								"api-front-craft",
+								"pagofacil",
+								"online"
+							],
+							"path": [
+								"users",
+								"getValidaciones"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "df63d2e9-3cd9-48fa-b268-207ba84761be",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5eab918a-731e-4021-969c-a40a657ab74c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "abb5767b-9413-45d8-a270-6664174fee46",
+			"key": "Protocol",
+			"value": "https"
+		},
+		{
+			"id": "0d5d7e6e-9aa6-4e3b-b1e2-bb83689bb2d2",
+			"key": "Address_Craft",
+			"value": "x.pagofacil.online"
+		},
+		{
+			"id": "0bdbde61-e13b-4202-a173-2bd891ca34f8",
+			"key": "URL_CRAFT",
+			"value": "{{Protocol}}://{{Address_Craft}}"
+		},
+		{
+			"id": "6f27ee3a-2320-407e-bc02-c55d925ad51a",
+			"key": "Address_Api_Token",
+			"value": "apis.pagofacil.xyz"
+		},
+		{
+			"id": "95a3ef61-a7ab-4c8b-8ed2-e13e7ee03720",
+			"key": "URL_ApiToken",
+			"value": "{{Protocol}}://{{Address_Api_Token}}"
+		},
+		{
+			"id": "817ee04a-4acf-4ced-853e-516ee7089989",
+			"key": "Address_CompletarOrden",
+			"value": "uzotywpg3a.execute-api.us-west-2.amazonaws.com"
+		},
+		{
+			"id": "5aa6c0d9-cd31-4200-adf7-51d757e410f0",
+			"key": "URL_CompletarOrden",
+			"value": "{{Protocol}}://{{Address_CompletarOrden}}"
+		},
+		{
+			"id": "b8a3093d-a2a8-4290-a796-1f74f9f9ff16",
+			"key": "Address_RegistroUser",
+			"value": "v2.api.pagofacil.online"
+		},
+		{
+			"id": "e167011f-3659-4e40-8f92-a000455c158c",
+			"key": "URL_CRAFT_Registro",
+			"value": "{{Protocol}}://{{Address_RegistroUser}}"
+		},
+		{
+			"id": "bc8a649d-3756-46ee-8eef-d0896f68ba83",
+			"key": "idServicio",
+			"value": "3071"
+		},
+		{
+			"id": "b2c2ba7f-b574-4c5a-968c-e8d0b070110c",
+			"key": "monto",
+			"value": "50000"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
