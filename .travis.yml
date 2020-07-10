@@ -12,4 +12,6 @@ before_script:
 
 script:
 
-- newman run https://api.getpostman.com/collections/8e7c0dda-d17e-4e6d-9532-5e76de64932f?apikey=PMAK-5f0726c3d1e9a9004ea064e6-b3a71482d485dab0c827b59c582b00dec6
+- node_modules/.bin/newman run
+
+https://api.getpostman.com/collections/8e7c0dda-d17e-4e6d-9532-5e76de64932f?apikey=PMAK-5f0726c3d1e9a9004ea064e6-b3a71482d485dab0c827b59c582b00dec6 -e
