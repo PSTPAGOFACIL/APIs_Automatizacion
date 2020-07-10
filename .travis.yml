@@ -9,6 +9,19 @@ before_script:
 - node --version
 - npm --version
 
+const { readdir, stat } = require("fs").promises
+const { join } = require("path")
+
+const dirs = async path => {
+  let dirs = []
+  for (const file of await readdir(path)) {
+    if ((await stat(join(path, file))).isDirectory()) {
+      dirs = [...dirs, file]
+    }
+  }
+  return dirs
+}
+
 script:
 
 - node_modules/.bin/newman run APIs_Automatizacion/API_Blacklist.postman_collection.json
