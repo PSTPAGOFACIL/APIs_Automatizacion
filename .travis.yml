@@ -11,4 +11,4 @@ before_script:
 
 script:
 
-- node_modules/.bin/newman run APIs_Automatizacion/API_Blacklist.postman_collection.json -e
+- node_modules/.bin/newman run APIs_Automatizacion/API_Blacklist.postman_collection.json
