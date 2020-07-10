@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - 12
+  
+install:
+- npm init
+- npm install --save newman
 
 before_script:
 - node --version
