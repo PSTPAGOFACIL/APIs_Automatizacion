@@ -12,4 +12,4 @@ before_script:
 
 script:
 
-- node_modules/.bin/newman run APIs_Automatizacion/API Blacklist.postman_collection.json -e
+- node_modules/.bin/newman run https://github.com/PSTPAGOFACIL/APIs_Automatizacion/blob/qa/API%20Blacklist.postman_collection.json -e
