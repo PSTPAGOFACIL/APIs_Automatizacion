@@ -8,7 +8,8 @@ install:
 before_script:
 - node --version
 - npm --version
+- node_modules/.bin/newman --version
 
 script:
 
-- newman run APIs_Automatizacion/API_Blacklist.postman_collection.json
+- node_modules/.bin/newman run APIs_Automatizacion/API_Blacklist.postman_collection.json
