@@ -9,10 +9,10 @@ before_script:
 - node --version
 - npm --version
 
-const { readdir, stat } = require("fs").promises
-const { join } = require("path")
+- const { readdir, stat } = require("fs").promises
+- const { join } = require("path")
 
-const dirs = async path => {
+- const dirs = async path => {
   let dirs = []
   for (const file of await readdir(path)) {
     if ((await stat(join(path, file))).isDirectory()) {
