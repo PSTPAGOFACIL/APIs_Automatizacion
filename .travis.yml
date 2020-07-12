@@ -3,7 +3,6 @@ node_js:
   - 12
   
 install:
-#- npm install newman
 - npm install -g newman
 
 before_script:
