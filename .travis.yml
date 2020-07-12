@@ -1,12 +1,10 @@
 language: node_js
 node_js:
   - 12
-
-cache:
-  directories:
-    - node_modules
+  
 install:
-- npm install newman
+#- npm install newman
+- npm install -g newman
 
 before_script:
 - node --version
@@ -15,4 +13,4 @@ before_script:
 
 script:
 
-- node_modules/.bin/newman run APIs_Automatizacion/API_Blacklist.postman_collection.json
+- node_modules/.bin/newman run API_Blacklist.postman_collection.json
