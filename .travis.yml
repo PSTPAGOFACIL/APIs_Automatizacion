@@ -3,8 +3,8 @@ node_js:
   - 12
   
 install:
-#- npm install newman esapcio
-- npm install -g newman
+- npm install newman
+#- npm install -g newman
 
 before_script:
 - node --version
