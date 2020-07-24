@@ -15,4 +15,5 @@ script:
 
 #- node_modules/.bin/newman run API_Blacklist.postman_collection.json
 #- node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
+if: branch = qa
 - node_modules/.bin/newman run API_Reportes.postman_collection.json
