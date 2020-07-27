@@ -11,9 +11,28 @@ before_script:
 - npm --version
 - node_modules/.bin/newman --version
 
-script:
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo 'Probando el Código'
+        - npm test
+        - node_modules/.bin/newman run API_Reportes.postman_collection.json
+    - stage: deploy2Craft
+      script:
+        - sls deploy --stage craft
+    - stage: deploy2Dev
+      script:
+        - sls deploy --stage dev
+    - stage: deploy2Qa
+      script:
+        - sls deploy --stage qa
+    - stage: deploy2Prod
+      script:
+        - sls deploy --stage beta
+        - sls deploy --stage prod
 
-#- node_modules/.bin/newman run API_Blacklist.postman_collection.json
-#- node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
-if: branch = qa
-- node_modules/.bin/newman run API_Reportes.postman_collection.json
+stages:
+  #Cualquier push genera que se ejecuten las pruebas por el momento.
+  - name: test
+    if: type = pull_request = qa
