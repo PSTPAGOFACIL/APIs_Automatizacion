@@ -16,7 +16,7 @@ jobs:
     - stage: test
       script:
         - echo 'Probando el Código'
-        - npm test
+        #- npm test
         - node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
 
 stages:
