@@ -11,21 +11,21 @@ before_script:
 - npm --version
 - node_modules/.bin/newman --version
 
-#jobs:
-#  include:
- #   - stage: test
- #     script:
-   #     - echo 'Probando el Código'
- #       - npm test
-  #      - node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo 'Probando el Código'
+        - npm test
+        - node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
 
-#stages:
+stages:
   #Cualquier push genera que se ejecuten las pruebas por el momento.
- # - name: test
- #   if: type = pull_request = qa
-
-script:
+  - name: test
+    if: type = push AND branch = qa
+ 
+#script:
 
 #- node_modules/.bin/newman run API_Blacklist.postman_collection.json
-- node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
+#- node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
 #- node_modules/.bin/newman run API_Reportes.postman_collection.json
