@@ -23,6 +23,7 @@ stages:
   #Cualquier push genera que se ejecuten las pruebas por el momento.
   - name: test
     if: type = push AND branch = qa
+    if: type = push AND branch = dev
  
 #script:
 
