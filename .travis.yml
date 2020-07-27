@@ -18,19 +18,6 @@ jobs:
         - echo 'Probando el Código'
         - npm test
         - node_modules/.bin/newman run API_Reportes.postman_collection.json
-    - stage: deploy2Craft
-      script:
-        - sls deploy --stage craft
-    - stage: deploy2Dev
-      script:
-        - sls deploy --stage dev
-    - stage: deploy2Qa
-      script:
-        - sls deploy --stage qa
-    - stage: deploy2Prod
-      script:
-        - sls deploy --stage beta
-        - sls deploy --stage prod
 
 stages:
   #Cualquier push genera que se ejecuten las pruebas por el momento.
