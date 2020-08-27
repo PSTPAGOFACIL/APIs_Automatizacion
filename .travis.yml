@@ -5,6 +5,7 @@ node_js:
 install:
 - npm install newman
 #- npm install -g newman
+# prueba
 
 before_script:
 - node --version
