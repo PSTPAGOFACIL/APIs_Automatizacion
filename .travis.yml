@@ -20,7 +20,8 @@ jobs:
         - echo 'Ejecutando colección de POSTMAN'
         #- npm test
         #- node_modules/.bin/newman run https://api.getpostman.com/collections/644166ec-d382-4d93-95b8-fe16d0479e68?apikey=PMAK-5f0726c3d1e9a9004ea064e6-b3a71482d485dab0c827b59c582b00dec6
-        - node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
+        #- node_modules/.bin/newman run API_CrearTXN.postman_collection.json --environment "CRAFT.postman_environment.json" --iteration-data "creartxn.json"
+        -  node_modules/.bin/newman runhttps://api.getpostman.com/collections/11501733-5cb09009-8aa1-4223-afce-bf511846f59b?apikey=PMAK-5f0726c3d1e9a9004ea064e6-b3a71482d485dab0c827b59c582b00dec6
         #- node_modules/.bin/newman run API_Reportes.postman_collection.json
         #- node_modules/.bin/newman run https://api.getpostman.com/collections/6853aa07-5570-40c5-a67c-2a7d6dae450f?apikey=PMAK-5f0726c3d1e9a9004ea064e6-b3a71482d485dab0c827b59c582b00dec6
 
