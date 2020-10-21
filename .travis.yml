@@ -26,7 +26,7 @@ jobs:
         #- node_modules/.bin/newman run https://api.getpostman.com/collections/6853aa07-5570-40c5-a67c-2a7d6dae450f?apikey=PMAK-5f0726c3d1e9a9004ea064e6-b3a71482d485dab0c827b59c582b00dec6
 
 stages:
-  #Cualquier push genera que se ejecuten las pruebas por el momento.
+  #Solo se ejeuctan las pruebas en branch QA
   - name: test
     if: type = push AND branch = qa
  
