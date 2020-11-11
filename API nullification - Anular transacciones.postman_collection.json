@@ -187,6 +187,10 @@
 							"let jsondata = pm.response.json();",
 							"pm.globals.set(\"id\", jsondata.data.id);",
 							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
 							"pm.test(\"Contiene Monto\", function () {",
 							"     var jsondata = pm.response.json();",
 							"    pm.expect(jsondata.data.monto).to.eql(pm.iterationData.get(\"monto\"));",
@@ -1213,7 +1217,7 @@
 			"response": []
 		},
 		{
-			"name": "Anular TXN Total pago en cuotas con intereses Copy",
+			"name": "Anular TXN Total pago en cuotas con intereses",
 			"event": [
 				{
 					"listen": "test",
@@ -1363,72 +1367,72 @@
 	],
 	"variable": [
 		{
-			"id": "df477c58-953c-40da-bdc5-bbd626816a15",
+			"id": "5d6214dd-b72c-40a8-a3f9-a9632a085055",
 			"key": "Protocol",
 			"value": "https"
 		},
 		{
-			"id": "f9c917f2-f4da-46bc-88ae-4f7f95377530",
+			"id": "535133c2-5a96-42ac-b931-e0ba7d1784df",
 			"key": "Address_Craft",
 			"value": "x.pagofacil.online"
 		},
 		{
-			"id": "469d0b3a-66a2-44d5-be89-b2334a88b7e5",
+			"id": "11124152-485f-4e36-9c3b-d4525abd81ae",
 			"key": "URL_CRAFT",
 			"value": "{{Protocol}}://{{Address_Craft}}"
 		},
 		{
-			"id": "6f4a4ac9-7099-4c8a-80e7-bb261f4c82de",
+			"id": "ffc018b3-6f40-4b40-af44-64413282c8a3",
 			"key": "Address_Api_Token",
 			"value": "apis.pagofacil.xyz"
 		},
 		{
-			"id": "6498663e-5404-4a2a-875b-a5f2ec3d1df6",
+			"id": "5c6f7871-baa7-4d3d-8bd1-2194ded07a9b",
 			"key": "URL_ApiToken",
 			"value": "{{Protocol}}://{{Address_Api_Token}}"
 		},
 		{
-			"id": "c6811054-6ac2-486d-80b4-8f442820676b",
+			"id": "fed1ba16-e956-4591-962d-ca04e55ca2ac",
 			"key": "Address_CompletarOrden",
 			"value": "uzotywpg3a.execute-api.us-west-2.amazonaws.com"
 		},
 		{
-			"id": "4e98d4dd-1806-4f8b-8453-21bfe35348a3",
+			"id": "4e47bcb9-b933-4c01-843b-158cb5d42e4c",
 			"key": "URL_CompletarOrden",
 			"value": "{{Protocol}}://{{Address_CompletarOrden}}"
 		},
 		{
-			"id": "8a8eb345-0c27-47e5-922a-9d2bcf99a66b",
+			"id": "9f731484-b311-49a7-b873-006a4749f22e",
 			"key": "Address_RegistroUser",
 			"value": "v2.api.pagofacil.online"
 		},
 		{
-			"id": "cb52b2e7-94d3-4f52-9e07-9099a6628f01",
+			"id": "54820d2d-9c0d-4779-be1c-03b72c71b0ef",
 			"key": "URL_CRAFT_Registro",
 			"value": "{{Protocol}}://{{Address_RegistroUser}}"
 		},
 		{
-			"id": "5286dd94-d736-4288-8dda-8fb1feb11837",
+			"id": "63267983-8b54-4120-a755-74f257b869a6",
 			"key": "idServicio",
 			"value": "3071"
 		},
 		{
-			"id": "e104d41b-3093-48b5-bce4-3b01c1b64967",
+			"id": "be82927f-cbfc-4070-910a-43fbd0712633",
 			"key": "monto",
 			"value": "5000"
 		},
 		{
-			"id": "cdf8dbf2-0d40-4bfc-8e6c-540285ddd835",
+			"id": "f6395ce8-4c93-495d-98e8-ed83cf689133",
 			"key": "IdTrx1",
 			"value": "51275261"
 		},
 		{
-			"id": "622b0d94-5c00-4d71-867d-e4efb4a11d42",
+			"id": "09c4638e-1718-4cab-96a5-1dc607616f52",
 			"key": "IdTrx2",
 			"value": "51275262"
 		},
 		{
-			"id": "6f171549-f574-4f07-8d0a-0e8efcc8015f",
+			"id": "d703cf85-e481-4516-ba00-326acc13ff12",
 			"key": "IdTrx3",
 			"value": "51275287"
 		}

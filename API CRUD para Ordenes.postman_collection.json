@@ -1,0 +1,4306 @@
+{
+	"info": {
+		"_postman_id": "644166ec-d382-4d93-95b8-fe16d0479e68",
+		"name": "API CRUD para Ordenes",
+		"description": "API CRUD para Ordenes\n\nContact Support:\n Email: cristian@pagofacil.cl",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Crea una orden 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc7549ef-6678-4733-9a4f-6888a98fe439",
+								"exec": [
+									"//Pasar id a variable Global\r",
+									"let jsondata = pm.response.json();\r",
+									"pm.globals.set(\"idOrder\", jsondata.idOrder);\r",
+									"\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 201 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(201);\r",
+									"});\r",
+									"\r",
+									"let Mensaje= jsondata;\r",
+									"console.log(Mensaje);\r",
+									"\r",
+									"pm.test(\"Valido retorno de campo ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"idOrder\");\r",
+									"});\r",
+									"\r",
+									"console.log(typeof jsondata.idOrder);\r",
+									"pm.test(\"Valido tipo de dato de campo idOrder = string\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(typeof jsonData.idOrder).to.eql(\"string\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\",\r\n    \"paymentType\": \"WebPayPST\",\r\n    \"hasBill\": 1,\r\n    \"billStatus\": \"completed\",\r\n    \"folio\": 2525,\r\n    \"urlPdf\": \"/path/name.pdf\",\r\n    \"urlXml\": \"/path/name.xml\",\r\n    \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\r\n    \"amount\": 2000,\r\n    \"idService\": \"2\",\r\n    \"idUser\": \"2\",\r\n    \"orderType\": \"servicio\",\r\n    \"clientData\": {\r\n      \"rut\": \"76804564-K\",\r\n      \"ciudad\": \"Santiago\",\r\n      \"comuna\": \"Santiago Centro\",\r\n      \"direccion\": \"Apoquindo 5050\",\r\n      \"emailDTE\": \"test@gmail.cl\",\r\n      \"giro\": \"Ventas\",\r\n      \"razonSocial\": \"Pago Facil SPA\",\r\n      \"contacto\": {}\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Crea una orden 401",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4a7611c-49a4-444b-b66d-638d5ae44ede",
+								"exec": [
+									"//Pasar id a variable Global\r",
+									"let jsondata = pm.response.json();\r",
+									"pm.globals.set(\"idOrder\", jsondata.idOrder);\r",
+									"\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 201 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(401);\r",
+									"});\r",
+									"\r",
+									"let Mensaje= jsondata;\r",
+									"console.log(Mensaje);\r",
+									"\r",
+									"pm.test(\"Valido retorno de campo ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\",\r\n    \"paymentType\": \"WebPayPST\",\r\n    \"hasBill\": 1,\r\n    \"billStatus\": \"completed\",\r\n    \"folio\": 2525,\r\n    \"urlPdf\": \"/path/name.pdf\",\r\n    \"urlXml\": \"/path/name.xml\",\r\n    \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\r\n    \"amount\": 1000,\r\n    \"idService\": \"2\",\r\n    \"idUser\": \"2\",\r\n    \"orderType\": \"servicio\",\r\n    \"clientData\": {\r\n      \"rut\": \"76804564-K\",\r\n      \"ciudad\": \"Santiago\",\r\n      \"comuna\": \"Santiago Centro\",\r\n      \"direccion\": \"Apoquindo 5050\",\r\n      \"emailDTE\": \"test@gmail.cl\",\r\n      \"giro\": \"Ventas\",\r\n      \"razonSocial\": \"Pago Facil SPA\",\r\n      \"contacto\": {}\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Crea una orden 403",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8f46413-80c7-4e25-a11d-7096c76252c8",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 403 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});\r",
+									"\r",
+									"let Mensaje= jsondata.Message;\r",
+									"console.log(Mensaje);\r",
+									"\r",
+									"pm.test(\"Valido el mensaje de respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsondata.Message).to.eql(\"User: anonymous is not authorized to perform: execute-api:Invoke on resource: arn:aws:execute-api:us-west-2:********5343:rul43upnjd/craft/POST/\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\",\r\n    \"paymentType\": \"WebPayPST\",\r\n    \"hasBill\": 1,\r\n    \"billStatus\": \"completed\",\r\n    \"folio\": 2525,\r\n    \"urlPdf\": \"/path/name.pdf\",\r\n    \"urlXml\": \"/path/name.xml\",\r\n    \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\r\n    \"amount\": 1000,\r\n    \"idService\": \"2\",\r\n    \"idUser\": \"2\",\r\n    \"orderType\": \"servicio\",\r\n    \"clientData\": {\r\n      \"rut\": \"76804564-K\",\r\n      \"ciudad\": \"Santiago\",\r\n      \"comuna\": \"Santiago Centro\",\r\n      \"direccion\": \"Apoquindo 5050\",\r\n      \"emailDTE\": \"test@gmail.cl\",\r\n      \"giro\": \"Ventas\",\r\n      \"razonSocial\": \"Pago Facil SPA\",\r\n      \"contacto\": {}\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Crea una orden 422",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9f2e79be-b82a-480c-822e-13cf3444fdaa",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 422 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(422);\r",
+									"});\r",
+									"\r",
+									"let error= jsondata.error;\r",
+									"console.log(error);\r",
+									"\r",
+									"pm.test(\"Valido mensaje de error\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql(\"[object has missing required properties ([\\\"amount\\\",\\\"idService\\\",\\\"idUser\\\",\\\"orderType\\\"])]\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\",\r\n    \"paymentType\": \"WebPayPST\",\r\n    \"hasBill\": 1,\r\n    \"billStatus\": \"completed\",\r\n    \"folio\": 2525,\r\n    \"urlPdf\": \"/path/name.pdf\",\r\n    \"urlXml\": \"/path/name.xml\",\r\n    \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\r\n    \"clientData\": {\r\n      \"rut\": \"76804564-K\",\r\n      \"ciudad\": \"Santiago\",\r\n      \"comuna\": \"Santiago Centro\",\r\n      \"direccion\": \"Apoquindo 5050\",\r\n      \"emailDTE\": \"test@gmail.cl\",\r\n      \"giro\": \"Ventas\",\r\n      \"razonSocial\": \"Pago Facil SPA\",\r\n      \"contacto\": {}\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Crea una orden 500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "768c23f2-acee-4c15-be26-314daccda1c3",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 500 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\",\r\n    \"paymentType\": \"WebPayPST\",\r\n    \"hasBill\": 1,\r\n    \"billStatus\": \"completed\",\r\n    \"folio\": 2525,\r\n    \"urlPdf\": \"/path/name.pdf\",\r\n    \"urlXml\": \"/path/name.xml\",\r\n    \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\r\n    \"amount\": 1000,\r\n    \"idService\": \"22xaxw\",\r\n    \"idUser\": \"2a23\",\r\n    \"orderType\": \"seweweasrvicio\",\r\n    \"clientData\": {\r\n      \"rut\": \"76804564-K\",\r\n      \"ciudad\": \"Santiago\",\r\n      \"comuna\": \"Santiago Centro\",\r\n      \"direccion\": \"Apoquindo 5050\",\r\n      \"emailDTE\": \"test@gmail.cl\",\r\n      \"giro\": \"Ventas\",\r\n      \"razonSocial\": \"Pago Facil SPA\",\r\n      \"contacto\": {}\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GET / ID ORDER",
+			"item": [
+				{
+					"name": "Obtiene una orden 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee7ddeab-4422-42a7-98a5-27fc9ad435d0",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"pm.globals.set(\"createdTimestamp\", jsondata.createdTimestamp);\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"console.log(typeof jsondata.urlPdf);\r",
+									"pm.test(\"Valido tipo de dato de campo urlPdf = String\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(typeof jsonData.urlPdf).to.eql(\"string\");\r",
+									"})\r",
+									"\r",
+									"console.log(typeof jsondata.hasBill);\r",
+									"pm.test(\"Valido tipo de dato de campo hasBill = number\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(typeof jsonData.hasBill).to.eql(\"number\");\r",
+									"})\r",
+									"\r",
+									"console.log(typeof jsondata.documentType);\r",
+									"pm.test(\"Valido tipo de dato de campo documentType = string\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(typeof jsonData.documentType).to.eql(\"string\");\r",
+									"})\r",
+									"\r",
+									"console.log(typeof jsondata.clientData.rut);\r",
+									"pm.test(\"Valido tipo de dato de campo rut = string\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(typeof jsonData.clientData.rut).to.eql(\"string\");\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Obtiene una orden 401",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4dce431-c4e1-4fad-8f30-32791f68cadc",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 401 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Obtiene una orden 403",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1fe0bb3a-cd38-4180-80e4-41dffc43c1c2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9558e16-5c23-484c-b3e3-7cdc4cd9fde1",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 403 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});\r",
+									"\r",
+									"let Mensaje= jsondata.Message;\r",
+									"console.log(Mensaje);\r",
+									"\r",
+									"pm.test(\"Valido el mensaje de respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsondata.Message).to.eql(\"User: anonymous is not authorized to perform: execute-api:Invoke on resource: arn:aws:execute-api:us-west-2:********5343:rul43upnjd/craft/POST/\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Obtiene una orden 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34c03df7-0ae5-4de0-9c4e-25943c53323b",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 404 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/3ed5b5e-db14-436a-9f08-8144ce5a56ed",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"3ed5b5e-db14-436a-9f08-8144ce5a56ed"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Obtiene una orden 500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2cd38d08-afd9-43c1-ad19-14b2eca23142",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 403 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "Actualiza estado de una orden 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "007c7915-16bb-40a7-96fd-1c3172d7d4cb",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"pending\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}/{{createdTimestamp}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}",
+								"{{createdTimestamp}}"
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Actualiza estado de una orden 401",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "49a7ff38-3373-44a8-a600-7916e035293b",
+								"exec": [
+									"//Pasar id a variable Global\r",
+									"let jsondata = pm.response.json();\r",
+									"pm.globals.set(\"idOrder\", jsondata.idOrder);\r",
+									"\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 201 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(401);\r",
+									"});\r",
+									"\r",
+									"let Mensaje= jsondata;\r",
+									"console.log(Mensaje);\r",
+									"\r",
+									"pm.test(\"Valido retorno de campo ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"pending\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/6386-2020-05-1-3002-3/1590127209",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"6386-2020-05-1-3002-3",
+								"1590127209"
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Actualiza estado de una orden 403",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "79a52f48-e1d6-43eb-b5ad-9320a933da33",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 403 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});\r",
+									"\r",
+									"let Mensaje= jsondata.Message;\r",
+									"console.log(Mensaje);\r",
+									"\r",
+									"pm.test(\"Valido el mensaje de respuesta\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsondata.Message).to.eql(\"User: anonymous is not authorized to perform: execute-api:Invoke on resource: arn:aws:execute-api:us-west-2:********5343:rul43upnjd/craft/POST/\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/6386-2020-05-1-3002-3/1590127209",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"6386-2020-05-1-3002-3",
+								"1590127209"
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Actualiza estado de una orden 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b675911-efcf-425a-8366-373850fb1176",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 403 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/6386-2020-05-1-3002-3/1590127209",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"6386-2020-05-1-3002-3",
+								"1590127209"
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Actualiza estado de una orden 422",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ddb8492-dd4f-4853-8b99-78c400a73721",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 422 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(422);\r",
+									"});\r",
+									"\r",
+									"let error= jsondata.error;\r",
+									"console.log(error);\r",
+									"\r",
+									"pm.test(\"Valido mensaje de error\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.error).to.eql(\"[object has missing required properties status]\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": { \r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/6386-2020-05-1-3002-3/1590127209",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"6386-2020-05-1-3002-3",
+								"1590127209"
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Actualiza estado de una orden 500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "44e644e0-45bc-45bf-b974-df4d2e791511",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Order\": {\r\n    \"status\": \"completed\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{URL_CRAFT}}/6386-2020-05-1-3002-3/1590127209",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"6386-2020-05-1-3002-3",
+								"1590127209"
+							]
+						},
+						"description": "Crea una cuenta bancaria asociada a un usuario."
+					},
+					"response": [
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": \"182-2020-08-1-269-4\"\n}"
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\": 1000,\n    \"idOrder\": \"182-2020-08-1-269-4\",\n    \"idServicio\": \"1\",\n    \"orderType\": \"servicio\",\n    \"idUsuario\": \"1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GET / LIST",
+			"item": [
+				{
+					"name": "Consultar orden por ID con filtros 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "05a8090f-9110-48d0-a2a7-c4963e82ae1c",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/?limit=10&idUser=1",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "El número de ordenes para devolver"
+								},
+								{
+									"key": "idUser",
+									"value": "1",
+									"description": "El objeto con elementos de filtro para devolver."
+								},
+								{
+									"key": "idService",
+									"value": "1",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "amount",
+									"value": "20000",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "orderType",
+									"value": "servicio; comisiones",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "pending; completed",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "hasBill",
+									"value": "0; 1",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "folio",
+									"value": "48863",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "billStatus",
+									"value": "pending; completed",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "paymentType",
+									"value": "OneClick",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "documentType",
+									"value": "FACTURA_ELECTRONICA; FACTURA_ELECTRONICA_EXENTA",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "createdDayTimestamp",
+									"value": "1500926835",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								},
+								{
+									"key": "updatedDayTimestamp",
+									"value": "1500926835",
+									"description": "El objeto con elementos de filtro para devolver.",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?limit=0&offset=20&idUser=1&idService=1&amount=1000&orderType=servicio&status=completed&hasBill=1&folio=2525&billStatus=completed&paymentType=WebPayPST&documentType=BOLETA_ELECTRONICA_EXENTA&createdDayTimestamp=1541376000&updatedDayTimestamp=1541721600",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"key": "offset",
+											"value": "20"
+										},
+										{
+											"key": "idUser",
+											"value": "1"
+										},
+										{
+											"key": "idService",
+											"value": "1"
+										},
+										{
+											"key": "amount",
+											"value": "1000"
+										},
+										{
+											"key": "orderType",
+											"value": "servicio"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										},
+										{
+											"key": "hasBill",
+											"value": "1"
+										},
+										{
+											"key": "folio",
+											"value": "2525"
+										},
+										{
+											"key": "billStatus",
+											"value": "completed"
+										},
+										{
+											"key": "paymentType",
+											"value": "WebPayPST"
+										},
+										{
+											"key": "documentType",
+											"value": "BOLETA_ELECTRONICA_EXENTA"
+										},
+										{
+											"key": "createdDayTimestamp",
+											"value": "1541376000"
+										},
+										{
+											"key": "updatedDayTimestamp",
+											"value": "1541721600"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Respuesta con la lista de ordenes del search result.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?limit=0&offset=20&idUser=1&idService=1&amount=1000&orderType=servicio&status=completed&hasBill=1&folio=2525&billStatus=completed&paymentType=WebPayPST&documentType=BOLETA_ELECTRONICA_EXENTA&createdDayTimestamp=1541376000&updatedDayTimestamp=1541721600",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"key": "offset",
+											"value": "20"
+										},
+										{
+											"key": "idUser",
+											"value": "1"
+										},
+										{
+											"key": "idService",
+											"value": "1"
+										},
+										{
+											"key": "amount",
+											"value": "1000"
+										},
+										{
+											"key": "orderType",
+											"value": "servicio"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										},
+										{
+											"key": "hasBill",
+											"value": "1"
+										},
+										{
+											"key": "folio",
+											"value": "2525"
+										},
+										{
+											"key": "billStatus",
+											"value": "completed"
+										},
+										{
+											"key": "paymentType",
+											"value": "WebPayPST"
+										},
+										{
+											"key": "documentType",
+											"value": "BOLETA_ELECTRONICA_EXENTA"
+										},
+										{
+											"key": "createdDayTimestamp",
+											"value": "1541376000"
+										},
+										{
+											"key": "updatedDayTimestamp",
+											"value": "1541721600"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"amount\": 1000,\n  \"createdAt\": \"2018-05-29 05:16:00\",\n  \"description\": \"Activación de Servicio\",\n  \"hasBill\": 1,\n  \"idOrder\": \"182-2020-08-1-269-4\",\n  \"idService\": \"1\",\n  \"idUser\": \"1\",\n  \"orderType\": \"servicio\",\n  \"status\": \"completed\",\n  \"urlPdf\": \"/path/name.pdf\",\n  \"urlXml\": \"/path/name.xml\",\n  \"folio\": 2525,\n  \"billStatus\": \"completed\",\n  \"paymentType\": \"WebPayPST\",\n  \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n  \"udpatedAt\": \"2018-05-29 05:16:00\"\n },\n {\n  \"amount\": 1000,\n  \"createdAt\": \"2018-05-29 05:16:00\",\n  \"description\": \"Activación de Servicio\",\n  \"hasBill\": 1,\n  \"idOrder\": \"182-2020-08-1-269-4\",\n  \"idService\": \"1\",\n  \"idUser\": \"1\",\n  \"orderType\": \"servicio\",\n  \"status\": \"completed\",\n  \"urlPdf\": \"/path/name.pdf\",\n  \"urlXml\": \"/path/name.xml\",\n  \"folio\": 2525,\n  \"billStatus\": \"completed\",\n  \"paymentType\": \"WebPayPST\",\n  \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n  \"udpatedAt\": \"2018-05-29 05:16:00\"\n }\n]"
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?limit=0&offset=20&idUser=1&idService=1&amount=1000&orderType=servicio&status=completed&hasBill=1&folio=2525&billStatus=completed&paymentType=WebPayPST&documentType=BOLETA_ELECTRONICA_EXENTA&createdDayTimestamp=1541376000&updatedDayTimestamp=1541721600",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"key": "offset",
+											"value": "20"
+										},
+										{
+											"key": "idUser",
+											"value": "1"
+										},
+										{
+											"key": "idService",
+											"value": "1"
+										},
+										{
+											"key": "amount",
+											"value": "1000"
+										},
+										{
+											"key": "orderType",
+											"value": "servicio"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										},
+										{
+											"key": "hasBill",
+											"value": "1"
+										},
+										{
+											"key": "folio",
+											"value": "2525"
+										},
+										{
+											"key": "billStatus",
+											"value": "completed"
+										},
+										{
+											"key": "paymentType",
+											"value": "WebPayPST"
+										},
+										{
+											"key": "documentType",
+											"value": "BOLETA_ELECTRONICA_EXENTA"
+										},
+										{
+											"key": "createdDayTimestamp",
+											"value": "1541376000"
+										},
+										{
+											"key": "updatedDayTimestamp",
+											"value": "1541721600"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?limit=0&offset=20&idUser=1&idService=1&amount=1000&orderType=servicio&status=completed&hasBill=1&folio=2525&billStatus=completed&paymentType=WebPayPST&documentType=BOLETA_ELECTRONICA_EXENTA&createdDayTimestamp=1541376000&updatedDayTimestamp=1541721600",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"key": "offset",
+											"value": "20"
+										},
+										{
+											"key": "idUser",
+											"value": "1"
+										},
+										{
+											"key": "idService",
+											"value": "1"
+										},
+										{
+											"key": "amount",
+											"value": "1000"
+										},
+										{
+											"key": "orderType",
+											"value": "servicio"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										},
+										{
+											"key": "hasBill",
+											"value": "1"
+										},
+										{
+											"key": "folio",
+											"value": "2525"
+										},
+										{
+											"key": "billStatus",
+											"value": "completed"
+										},
+										{
+											"key": "paymentType",
+											"value": "WebPayPST"
+										},
+										{
+											"key": "documentType",
+											"value": "BOLETA_ELECTRONICA_EXENTA"
+										},
+										{
+											"key": "createdDayTimestamp",
+											"value": "1541376000"
+										},
+										{
+											"key": "updatedDayTimestamp",
+											"value": "1541721600"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Consultar orden por ID con filtros 401",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "477f04ba-8569-4a12-abf5-f30ec8f8169f",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Consultar orden por ID con filtros 403",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b12e4fe7-949e-4c9f-87e1-3a4d29e4b1b5",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Consultar orden por ID con filtros 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3f29746-4814-4ade-b9f3-03cab6721326",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Consultar orden por ID con filtros 500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f4d7248-e765-4513-96f2-4d5b5dfa6a3c",
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"\r",
+									"let estado = pm.response.code;\r",
+									"console.log(estado);\r",
+									"\r",
+									"pm.test(\"Valido código de respuesta | Se requiere: Status 200 | valor obtenido: \" + estado, function () {\r",
+									"    pm.expect(estado).to.eql(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_CRAFT}}/{{idOrder}}",
+							"host": [
+								"{{URL_CRAFT}}"
+							],
+							"path": [
+								"{{idOrder}}"
+							]
+						},
+						"description": "Obtiene orden por ID"
+					},
+					"response": [
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Orden Asociada",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"amount\": 1000,\n \"createdAt\": \"2018-05-29 05:16:00\",\n \"description\": \"Activación de Servicio\",\n \"hasBill\": 1,\n \"idOrder\": \"182-2020-08-1-269-4\",\n \"idService\": \"1\",\n \"idUser\": \"1\",\n \"orderType\": \"servicio\",\n \"status\": \"completed\",\n \"urlPdf\": \"/path/name.pdf\",\n \"urlXml\": \"/path/name.xml\",\n \"folio\": 2525,\n \"billStatus\": \"completed\",\n \"paymentType\": \"WebPayPST\",\n \"documentType\": \"BOLETA_ELECTRONICA_EXENTA\",\n \"udpatedAt\": \"2018-05-29 05:16:00\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/:idOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idOrder"
+									],
+									"variable": [
+										{
+											"key": "idOrder"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6fa41eb9-e908-4b7a-8a6b-2e6911490163",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "69cf7e3a-d8d9-42e5-9b43-7ec949cb76a1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "156634ea-f323-4efa-89a1-0a93c8183ea2",
+			"key": "baseUrl",
+			"value": "https://virtserver.swaggerhub.com/PagoFacilSpA/pf_orders/1.0.0"
+		},
+		{
+			"id": "f00185b6-703a-4cb7-8e23-e898cdbdd96b",
+			"key": "URL_QA",
+			"value": "https://crud.qa.pagofacil.cl/orders"
+		},
+		{
+			"id": "e8adb573-7cbb-4434-b945-96446cbb7593",
+			"key": "URL_CRAFT",
+			"value": "https://crud.craft.pagofacil.cl/orders"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

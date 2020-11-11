@@ -1,0 +1,1005 @@
+{
+	"info": {
+		"_postman_id": "55e1fb6a-7900-4ead-9960-c9f1967cb33f",
+		"name": "API CRUD para Anulaciones",
+		"description": "API CRUD para Anulaciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{id Trx}",
+			"item": [
+				{
+					"name": "Retorna un arreglo de las anulaciones de una transaccion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "(Required) key de acceso.",
+								"key": "x-api-key",
+								"value": "<string>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/:idTrx",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":idTrx"
+							],
+							"variable": [
+								{
+									"id": "40f1053c-fdc2-4fc4-9b0c-e3c4942521f8",
+									"key": "idTrx",
+									"value": "<integer>",
+									"type": "string",
+									"description": "(Required) ID of the trx"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "HandlerException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) key de acceso.",
+										"key": "x-api-key",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"Internal Server Error\",\n \"code\": \"HandlerException\",\n \"success\": false\n}"
+						},
+						{
+							"name": "Sample response: Details about a nullifications",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) key de acceso.",
+										"key": "x-api-key",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"results\": [\n  {\n   \"idTrx\": 1,\n   \"montoAnulado\": \"velit et dolor cupidatat\",\n   \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"status\": \"PROCESADO\",\n   \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n   \"tipo\": \"Total\",\n   \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"montoDescuento\": -76318537,\n   \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"comprobanteNullify\": \"in ad non\",\n   \"responseTbk\": {\n    \"body\": \"mollit deserunt laboris anim\",\n    \"headers\": {\n     \"Access-Control-Allow-Credentials\": true,\n     \"Access-Control-Allow-Origin\": \"elit ut ullamco sed amet\"\n    },\n    \"statusCode\": -24989297\n   }\n  },\n  {\n   \"idTrx\": 1,\n   \"montoAnulado\": \"esse elit\",\n   \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"status\": \"PROCESADO\",\n   \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n   \"tipo\": \"Total\",\n   \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"montoDescuento\": 41170174,\n   \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"comprobanteNullify\": \"aliquip null\",\n   \"responseTbk\": {\n    \"body\": \"cupidatat fugiat amet ad\",\n    \"headers\": {\n     \"Access-Control-Allow-Credentials\": false,\n     \"Access-Control-Allow-Origin\": \"sit\"\n    },\n    \"statusCode\": -90720103\n   }\n  }\n ]\n}"
+						},
+						{
+							"name": "invalid input, object invalid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) key de acceso.",
+										"key": "x-api-key",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"rut invalido\",\n \"code\": \"InvalidRut\",\n \"success\": false\n}"
+						},
+						{
+							"name": "Unexpected error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "(Required) key de acceso.",
+										"key": "x-api-key",
+										"value": "<string>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": -79621576,\n \"message\": \"pariatur\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Actualiza una anulacion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"BankAccount\": {\n        \"idTrx\": 55864862,\n        \"montoAnulado\": \"quis amet\",\n        \"owner\": \"ad a\",\n        \"status\": \"sit voluptate est nostrud\",\n        \"timestamp\": \"u\",\n        \"tipo\": \"magna labore est sed\",\n        \"userId\": \"eius\",\n        \"montoDescuento\": -90110736,\n        \"verificationToken\": \"cons\",\n        \"comprobanteNullify\": \"amet eiusmod\",\n        \"responseTbk\": {\n            \"body\": \"cupidatat occaecat ut\",\n            \"headers\": {\n                \"Access-Control-Allow-Credentials\": false,\n                \"Access-Control-Allow-Origin\": \"et magna proident eiusmod\"\n            },\n            \"statusCode\": 59531321\n        }\n    }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/:idTrx/:timestamp",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":idTrx",
+								":timestamp"
+							],
+							"variable": [
+								{
+									"id": "2f1cb6bc-e6f3-403f-9bd6-5ce2f22ea704",
+									"key": "idTrx",
+									"value": "<integer>",
+									"type": "string",
+									"description": "(Required) "
+								},
+								{
+									"id": "a35a809b-fb65-454b-a0c9-45d1af4752b8",
+									"key": "timestamp",
+									"value": "eu veniam",
+									"type": "string",
+									"description": "(Required) "
+								}
+							]
+						},
+						"description": "Actualiza una anulacion asociada a una trx, siempre se necesita el timestamp para poder identificar la anulacion."
+					},
+					"response": [
+						{
+							"name": "invalid input, object invalid",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"BankAccount\": {\n        \"idTrx\": 1,\n        \"montoAnulado\": \"esse dolore nisi\",\n        \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"status\": \"PROCESADO\",\n        \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n        \"tipo\": \"Total\",\n        \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"montoDescuento\": 52749286,\n        \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"comprobanteNullify\": \"veniam ipsum\",\n        \"responseTbk\": {\n            \"body\": \"Ut Excepteur et\",\n            \"headers\": {\n                \"Access-Control-Allow-Credentials\": false,\n                \"Access-Control-Allow-Origin\": \"amet\"\n            },\n            \"statusCode\": 63262319\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx/:timestamp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx",
+										":timestamp"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										},
+										{
+											"key": "timestamp"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"rut invalido\",\n \"code\": \"InvalidRut\",\n \"success\": false\n}"
+						},
+						{
+							"name": "Actualizada exitosamente",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"BankAccount\": {\n        \"idTrx\": 1,\n        \"montoAnulado\": \"esse dolore nisi\",\n        \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"status\": \"PROCESADO\",\n        \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n        \"tipo\": \"Total\",\n        \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"montoDescuento\": 52749286,\n        \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"comprobanteNullify\": \"veniam ipsum\",\n        \"responseTbk\": {\n            \"body\": \"Ut Excepteur et\",\n            \"headers\": {\n                \"Access-Control-Allow-Credentials\": false,\n                \"Access-Control-Allow-Origin\": \"amet\"\n            },\n            \"statusCode\": 63262319\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx/:timestamp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx",
+										":timestamp"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										},
+										{
+											"key": "timestamp"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"BankAccount\": {\n        \"idTrx\": 1,\n        \"montoAnulado\": \"esse dolore nisi\",\n        \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"status\": \"PROCESADO\",\n        \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n        \"tipo\": \"Total\",\n        \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"montoDescuento\": 52749286,\n        \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"comprobanteNullify\": \"veniam ipsum\",\n        \"responseTbk\": {\n            \"body\": \"Ut Excepteur et\",\n            \"headers\": {\n                \"Access-Control-Allow-Credentials\": false,\n                \"Access-Control-Allow-Origin\": \"amet\"\n            },\n            \"statusCode\": 63262319\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx/:timestamp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx",
+										":timestamp"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										},
+										{
+											"key": "timestamp"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"BankAccount\": {\n        \"idTrx\": 1,\n        \"montoAnulado\": \"esse dolore nisi\",\n        \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"status\": \"PROCESADO\",\n        \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n        \"tipo\": \"Total\",\n        \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"montoDescuento\": 52749286,\n        \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"comprobanteNullify\": \"veniam ipsum\",\n        \"responseTbk\": {\n            \"body\": \"Ut Excepteur et\",\n            \"headers\": {\n                \"Access-Control-Allow-Credentials\": false,\n                \"Access-Control-Allow-Origin\": \"amet\"\n            },\n            \"statusCode\": 63262319\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx/:timestamp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx",
+										":timestamp"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										},
+										{
+											"key": "timestamp"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"BankAccount\": {\n        \"idTrx\": 1,\n        \"montoAnulado\": \"esse dolore nisi\",\n        \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"status\": \"PROCESADO\",\n        \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n        \"tipo\": \"Total\",\n        \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"montoDescuento\": 52749286,\n        \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n        \"comprobanteNullify\": \"veniam ipsum\",\n        \"responseTbk\": {\n            \"body\": \"Ut Excepteur et\",\n            \"headers\": {\n                \"Access-Control-Allow-Credentials\": false,\n                \"Access-Control-Allow-Origin\": \"amet\"\n            },\n            \"statusCode\": 63262319\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/:idTrx/:timestamp",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										":idTrx",
+										":timestamp"
+									],
+									"variable": [
+										{
+											"key": "idTrx"
+										},
+										{
+											"key": "timestamp"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "(root)",
+			"item": [
+				{
+					"name": "Obtiene las anulaciones según los parametros en query params",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/?idTrx=<integer>&owner=<string>&status=<string>&tipo=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "idTrx",
+									"value": "<integer>"
+								},
+								{
+									"key": "owner",
+									"value": "<string>"
+								},
+								{
+									"key": "status",
+									"value": "<string>"
+								},
+								{
+									"key": "tipo",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "HandlerException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?idTrx=<integer>&owner=<string>&status=<string>&tipo=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "idTrx",
+											"value": "<integer>"
+										},
+										{
+											"key": "owner",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"key": "tipo",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"Internal Server Error\",\n \"code\": \"HandlerException\",\n \"success\": false\n}"
+						},
+						{
+							"name": "Respuesta de las anulaciobes del search result.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?idTrx=<integer>&owner=<string>&status=<string>&tipo=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "idTrx",
+											"value": "<integer>"
+										},
+										{
+											"key": "owner",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"key": "tipo",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"results\": [\n  {\n   \"idTrx\": 1,\n   \"montoAnulado\": \"velit et dolor cupidatat\",\n   \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"status\": \"PROCESADO\",\n   \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n   \"tipo\": \"Total\",\n   \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"montoDescuento\": -76318537,\n   \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"comprobanteNullify\": \"in ad non\",\n   \"responseTbk\": {\n    \"body\": \"mollit deserunt laboris anim\",\n    \"headers\": {\n     \"Access-Control-Allow-Credentials\": true,\n     \"Access-Control-Allow-Origin\": \"elit ut ullamco sed amet\"\n    },\n    \"statusCode\": -24989297\n   }\n  },\n  {\n   \"idTrx\": 1,\n   \"montoAnulado\": \"esse elit\",\n   \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"status\": \"PROCESADO\",\n   \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n   \"tipo\": \"Total\",\n   \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"montoDescuento\": 41170174,\n   \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"comprobanteNullify\": \"aliquip null\",\n   \"responseTbk\": {\n    \"body\": \"cupidatat fugiat amet ad\",\n    \"headers\": {\n     \"Access-Control-Allow-Credentials\": false,\n     \"Access-Control-Allow-Origin\": \"sit\"\n    },\n    \"statusCode\": -90720103\n   }\n  }\n ]\n}"
+						},
+						{
+							"name": "invalid input, object invalid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/?idTrx=<integer>&owner=<string>&status=<string>&tipo=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "idTrx",
+											"value": "<integer>"
+										},
+										{
+											"key": "owner",
+											"value": "<string>"
+										},
+										{
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"key": "tipo",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"rut invalido\",\n \"code\": \"InvalidRut\",\n \"success\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Crea una anulacion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idTrx\": {\n        \"schema\": \"<integer>\"\n    },\n    \"montoAnulado\": {\n        \"schema\": \"<string>\"\n    },\n    \"montoDescuento\": {\n        \"schema\": \"<integer>\"\n    },\n    \"owner\": 57973652,\n    \"status\": {\n        \"schema\": \"<string>\"\n    },\n    \"tipo\": {\n        \"schema\": \"<string>\"\n    },\n    \"verificationToken\": \"labo\",\n    \"comprobanteNullify\": \"<string>\",\n    \"responseTbk\": {\n        \"body\": \"aliquip enim\",\n        \"headers\": {\n            \"Access-Control-Allow-Credentials\": false,\n            \"Access-Control-Allow-Origin\": \"quis magna a\"\n        },\n        \"statusCode\": 38143026\n    }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Crea una anulacion asociada a una  transaccion."
+					},
+					"response": [
+						{
+							"name": "Unauthorized.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idTrx\": {\n        \"schema\": \"<integer>\"\n    },\n    \"montoAnulado\": {\n        \"schema\": \"<string>\"\n    },\n    \"montoDescuento\": {\n        \"schema\": \"<integer>\"\n    },\n    \"owner\": 1,\n    \"status\": {\n        \"schema\": \"<string>\"\n    },\n    \"tipo\": {\n        \"schema\": \"<string>\"\n    },\n    \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n    \"comprobanteNullify\": \"<string>\",\n    \"responseTbk\": {\n        \"body\": \"consectetur\",\n        \"headers\": {\n            \"Access-Control-Allow-Credentials\": false,\n            \"Access-Control-Allow-Origin\": \"irure ut nisi veniam\"\n        },\n        \"statusCode\": -10006712\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "invalid input, object invalid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idTrx\": {\n        \"schema\": \"<integer>\"\n    },\n    \"montoAnulado\": {\n        \"schema\": \"<string>\"\n    },\n    \"montoDescuento\": {\n        \"schema\": \"<integer>\"\n    },\n    \"owner\": 1,\n    \"status\": {\n        \"schema\": \"<string>\"\n    },\n    \"tipo\": {\n        \"schema\": \"<string>\"\n    },\n    \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n    \"comprobanteNullify\": \"<string>\",\n    \"responseTbk\": {\n        \"body\": \"consectetur\",\n        \"headers\": {\n            \"Access-Control-Allow-Credentials\": false,\n            \"Access-Control-Allow-Origin\": \"irure ut nisi veniam\"\n        },\n        \"statusCode\": -10006712\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"message\": \"rut invalido\",\n \"code\": \"InvalidRut\",\n \"success\": false\n}"
+						},
+						{
+							"name": "La cuenta ha sido creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idTrx\": {\n        \"schema\": \"<integer>\"\n    },\n    \"montoAnulado\": {\n        \"schema\": \"<string>\"\n    },\n    \"montoDescuento\": {\n        \"schema\": \"<integer>\"\n    },\n    \"owner\": 1,\n    \"status\": {\n        \"schema\": \"<string>\"\n    },\n    \"tipo\": {\n        \"schema\": \"<string>\"\n    },\n    \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n    \"comprobanteNullify\": \"<string>\",\n    \"responseTbk\": {\n        \"body\": \"consectetur\",\n        \"headers\": {\n            \"Access-Control-Allow-Credentials\": false,\n            \"Access-Control-Allow-Origin\": \"irure ut nisi veniam\"\n        },\n        \"statusCode\": -10006712\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"id\": 1\n}"
+						},
+						{
+							"name": "An error has ocurred.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idTrx\": {\n        \"schema\": \"<integer>\"\n    },\n    \"montoAnulado\": {\n        \"schema\": \"<string>\"\n    },\n    \"montoDescuento\": {\n        \"schema\": \"<integer>\"\n    },\n    \"owner\": 1,\n    \"status\": {\n        \"schema\": \"<string>\"\n    },\n    \"tipo\": {\n        \"schema\": \"<string>\"\n    },\n    \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n    \"comprobanteNullify\": \"<string>\",\n    \"responseTbk\": {\n        \"body\": \"consectetur\",\n        \"headers\": {\n            \"Access-Control-Allow-Credentials\": false,\n            \"Access-Control-Allow-Origin\": \"irure ut nisi veniam\"\n        },\n        \"statusCode\": -10006712\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden - You don't have access to this resource or IP address rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"idTrx\": {\n        \"schema\": \"<integer>\"\n    },\n    \"montoAnulado\": {\n        \"schema\": \"<string>\"\n    },\n    \"montoDescuento\": {\n        \"schema\": \"<integer>\"\n    },\n    \"owner\": 1,\n    \"status\": {\n        \"schema\": \"<string>\"\n    },\n    \"tipo\": {\n        \"schema\": \"<string>\"\n    },\n    \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n    \"comprobanteNullify\": \"<string>\",\n    \"responseTbk\": {\n        \"body\": \"consectetur\",\n        \"headers\": {\n            \"Access-Control-Allow-Credentials\": false,\n            \"Access-Control-Allow-Origin\": \"irure ut nisi veniam\"\n        },\n        \"statusCode\": -10006712\n    }\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Anular TRX parcial 200",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Retorna un arreglo de las anulaciones de un usuario en un rango de tiempo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/getByOwner/:idAuth/:start/:end",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"getByOwner",
+						":idAuth",
+						":start",
+						":end"
+					],
+					"variable": [
+						{
+							"id": "05bc85ff-fce2-4c06-a6ef-400c96ade039",
+							"key": "idAuth",
+							"value": "<string>",
+							"type": "string",
+							"description": "(Required) ID of the user"
+						},
+						{
+							"id": "4522a597-ee2d-4fba-a71f-cf827e57e0a1",
+							"key": "start",
+							"value": "<integer>",
+							"type": "string",
+							"description": "(Required) Inicio del rango de tiempo"
+						},
+						{
+							"id": "e588963f-fccc-4b63-9f0c-21340a21335f",
+							"key": "end",
+							"value": "<integer>",
+							"type": "string",
+							"description": "(Required) Fin del rango de tiempo"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Sample response: Details about a nullifications",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/getByOwner/:idAuth/:start/:end",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"getByOwner",
+								":idAuth",
+								":start",
+								":end"
+							],
+							"variable": [
+								{
+									"key": "idAuth"
+								},
+								{
+									"key": "start"
+								},
+								{
+									"key": "end"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"results\": [\n  {\n   \"idTrx\": 1,\n   \"montoAnulado\": \"velit et dolor cupidatat\",\n   \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"status\": \"PROCESADO\",\n   \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n   \"tipo\": \"Total\",\n   \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"montoDescuento\": -76318537,\n   \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"comprobanteNullify\": \"in ad non\",\n   \"responseTbk\": {\n    \"body\": \"mollit deserunt laboris anim\",\n    \"headers\": {\n     \"Access-Control-Allow-Credentials\": true,\n     \"Access-Control-Allow-Origin\": \"elit ut ullamco sed amet\"\n    },\n    \"statusCode\": -24989297\n   }\n  },\n  {\n   \"idTrx\": 1,\n   \"montoAnulado\": \"esse elit\",\n   \"owner\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"status\": \"PROCESADO\",\n   \"timestamp\": \"2020-08-22T18:46:59.000Z\",\n   \"tipo\": \"Total\",\n   \"userId\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"montoDescuento\": 41170174,\n   \"verificationToken\": \"a22afc18-8cb5-4e33-9cdd-410f06659c07\",\n   \"comprobanteNullify\": \"aliquip null\",\n   \"responseTbk\": {\n    \"body\": \"cupidatat fugiat amet ad\",\n    \"headers\": {\n     \"Access-Control-Allow-Credentials\": false,\n     \"Access-Control-Allow-Origin\": \"sit\"\n    },\n    \"statusCode\": -90720103\n   }\n  }\n ]\n}"
+				},
+				{
+					"name": "invalid input, object invalid",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/getByOwner/:idAuth/:start/:end",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"getByOwner",
+								":idAuth",
+								":start",
+								":end"
+							],
+							"variable": [
+								{
+									"key": "idAuth"
+								},
+								{
+									"key": "start"
+								},
+								{
+									"key": "end"
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"message\": \"rut invalido\",\n \"code\": \"InvalidRut\",\n \"success\": false\n}"
+				},
+				{
+					"name": "HandlerException",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/getByOwner/:idAuth/:start/:end",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"getByOwner",
+								":idAuth",
+								":start",
+								":end"
+							],
+							"variable": [
+								{
+									"key": "idAuth"
+								},
+								{
+									"key": "start"
+								},
+								{
+									"key": "end"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"message\": \"Internal Server Error\",\n \"code\": \"HandlerException\",\n \"success\": false\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "https://virtserver.swaggerhub.com/PagoFacilSpA/pf_nullifications/1.0.0",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
