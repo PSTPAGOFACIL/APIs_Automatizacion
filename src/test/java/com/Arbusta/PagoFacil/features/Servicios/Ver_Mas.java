@@ -23,6 +23,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.Arbusta.PagoFacil.tasks.EnAddons;
 import com.Arbusta.PagoFacil.tasks.EnCrearServicios;
+import com.Arbusta.PagoFacil.tasks.EnDetallesDelServicio;
 import com.Arbusta.PagoFacil.tasks.EnLogin;
 import com.Arbusta.PagoFacil.tasks.EnMisServicios;
 
@@ -35,6 +36,7 @@ import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.Hit;
 import net.serenitybdd.screenplay.actions.Open;
+import net.serenitybdd.screenplay.actions.Scroll;
 import net.serenitybdd.screenplay.actions.SelectFromOptions;
 import net.serenitybdd.screenplay.questions.TheValue;
 import net.serenitybdd.screenplay.questions.Text;
@@ -56,6 +58,7 @@ import com.Arbusta.PagoFacil.ui.LandingPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosCrearServicioPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosDetallesDelServicioPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosPageObject;
+import com.Arbusta.PagoFacil.ui.TiendaPageObject;
 import com.Arbusta.PagoFacil.ui.HomePageObject;
 import static com.Arbusta.PagoFacil.tasks.EnLogin.*;
 
@@ -80,7 +83,11 @@ public class Ver_Mas {
 	//Datos externos para el runner.
 	String cUsuario;
 	String cContraseña;
+	String nombreServicio;
 	String idServicio;
+	String idTiendaLinkCompletar;
+	String idTiendaLinkRecibo;
+	String order_ID = "19577";
 
 	private HomePageObject Home;
 
@@ -93,10 +100,8 @@ public class Ver_Mas {
 		BrowseTheWeb.as(Fer).setImplicitTimeout(20, SECONDS);
 
 		andThat(Fer).attemptsTo(Open.browserOn().the(Home), iniciarSesionCon(cUsuario,cContraseña));
-		Fer.attemptsTo(
-				Click.on(LandingPageObject.Mnu_MisServicios),
-				Click.on(ServiciosPageObject.btn_ver_mas_id(Integer.parseInt(idServicio)))
-				);
+		Fer.attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+		Fer.attemptsTo(EnMisServicios.seleccionarElServicioConelNombreDe(nombreServicio));
 	}
 
 	//Casos de la regresión o batería de casos de prueba.
@@ -108,7 +113,79 @@ public class Ver_Mas {
 		then(Fer).should(seeThat("El campo 'Numero del servicio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Numero_Servicio).asAString(),containsString(idServicio))
 				);
 	}
-
+	
+	@Test
+	public void link_Completar() {
+		Fer.attemptsTo(
+				Scroll.to(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkCompletar)),
+				Click.on(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkCompletar))
+				);
+		
+		then(Fer).should(seeThat("El popup 'Link de la Transacción'",the(ServiciosPageObject.pu_transaccion),isPresent())
+				);
+	}
+	
+	@Test
+	public void link_Completar_Mas_Info() {
+		Fer.attemptsTo(
+				Scroll.to(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkCompletar)),
+				Click.on(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkCompletar))
+				);
+		
+		then(Fer).should(eventually(seeThat("La URL de la página es ",
+				TheValue.of(suNavegador.getCurrentUrl()),  
+				is("https://dashboard.craft.pagofacil.cl/tbk-trxs/ver?id="+idTiendaLinkCompletar)
+				)),
+				eventually(seeThat("La URL de la página es ",
+						Text.of(TiendaPageObject.lbl_transaccion).asAString(),  
+						containsString(idTiendaLinkCompletar)
+						))
+				);
+	}
+	
+	@Test
+	public void link_Recibo() {
+		Fer.attemptsTo(
+				Scroll.to(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkRecibo)),
+				Click.on(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkRecibo))
+				);
+		
+		then(Fer).should(seeThat("El popup 'Link de la Transacción'",the(ServiciosPageObject.pu_transaccion),isPresent())
+				);
+	}
+	
+	@Test
+	public void link_Recibo_Mas_Info() {
+		Fer.attemptsTo(
+				Scroll.to(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkRecibo)),
+				Click.on(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkRecibo))
+				);
+		
+		then(Fer).should(eventually(seeThat("La URL de la página es ",
+				TheValue.of(suNavegador.getCurrentUrl()),  
+				is("https://dashboard.craft.pagofacil.cl/tbk-trxs/ver?id="+idTiendaLinkRecibo)
+				)),
+				eventually(seeThat("La URL de la página es ",
+						Text.of(TiendaPageObject.lbl_transaccion).asAString(),  
+						containsString(idTiendaLinkRecibo)
+						))
+				);
+	}
+	
+	@Test
+	public void filtrar_por_order_id_Tienda() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_order_ID_tienda(order_ID)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante el order id tienda'"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago(order_ID))
+						,isPresent())
+				));
+	}
+	
 	//Temporal: Para ver como quedarían los reportes de las ejecuciones en serenity.
 	@After
 	public void after_Test() { 

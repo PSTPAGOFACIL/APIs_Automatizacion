@@ -20,6 +20,8 @@ public class ServiciosCrearServicioPageObject extends PageObject {
 	public static Target lbl_UrlServicio_error	= Target.the("el mensaje de error de 'UrlServicio'").locatedBy("//form[1]/div[4]/div[2]");
 	
 	public static Target btn_Crear			= Target.the("el botón 'Crear'")			.locatedBy("//button[contains(text(),'Crear')]");
+	public static Target BTN_VER_MAS;
+	public static Target BTN_ELIMINAR;
 	
 	
 }

@@ -1,2 +1,2 @@
-cUsuario,cContraseña,idServicio
-luz.gutierrez@arbusta.net,Luzmaria09*,13775
+cUsuario,cContraseña,nombreServicio,idServicio,idTiendaLinkCompletar,idTiendaLinkRecibo
+luz.gutierrez@arbusta.net,Luzmaria09*,Servicio creado automáticamente.,13775,19581,19577

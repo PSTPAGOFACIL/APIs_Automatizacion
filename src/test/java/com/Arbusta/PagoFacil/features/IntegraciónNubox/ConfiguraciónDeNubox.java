@@ -91,17 +91,17 @@ public class ConfiguraciónDeNubox {
 
 	//Casos de la regresión o batería de casos de prueba.
 	
-//	@Test
-//	public void Acceso_a_Addons() {
-//		
-//		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_Configuración),Click.on(LandingPageObject.Lst_addons));
-//		
-//		then(Fer).should(eventually(seeThat("La URL de la página es ",
-//				TheValue.of(suNavegador.getCurrentUrl()),  
-//				is("https://dashboard.craft.pagofacil.cl/invoice/addons")
-//				)));
-//
-//	}
+	@Test
+	public void Acceso_a_Addons() {
+		
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_Configuración),Click.on(LandingPageObject.Lst_addons));
+		
+		then(Fer).should(eventually(seeThat("La URL de la página es ",
+				TheValue.of(suNavegador.getCurrentUrl()),  
+				is("https://dashboard.craft.pagofacil.cl/invoice/addons")
+				)));
+
+	}
 
 	@Test
 	public void Configurar_Nubox_correctamente() {
@@ -160,7 +160,7 @@ public class ConfiguraciónDeNubox {
 				)));
 
 	}
-//	
+////	
 //	@Test
 //	public void Configurar_Nubox_RUT_Incorrecto() {
 //
@@ -179,95 +179,95 @@ public class ConfiguraciónDeNubox {
 //
 //	}
 //	
-//	@Test
-//	public void Configurar_Nubox_usuario_Incorrecto() {
-//
-//		when(Fer).attemptsTo(
-//				
-//				Click.on(LandingPageObject.Mnu_Configuración),
-//				Click.on(LandingPageObject.Lst_addons),
-//				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUserIncorrecto,NuboxPass)
-//				
-//				);
-//		
-//		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
-//				TheValue.of(suNavegador.getPageSource()),  
-//				containsString("Mensaje de error")
-//				)));
-//
-//	}
+	@Test
+	public void Configurar_Nubox_usuario_Incorrecto() {
+
+		when(Fer).attemptsTo(
+				
+				Click.on(LandingPageObject.Mnu_Configuración),
+				Click.on(LandingPageObject.Lst_addons),
+				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUserIncorrecto,NuboxPass)
+				
+				);
+		
+		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
+				TheValue.of(suNavegador.getPageSource()),  
+				containsString("Se guardaron los datos pero las credenciales no son válidas")
+				)));
+
+	}
 //	
-//	@Test
-//	public void Configurar_Nubox_contrasena_Incorrecta() {
-//
-//		when(Fer).attemptsTo(
-//				
-//				Click.on(LandingPageObject.Mnu_Configuración),
-//				Click.on(LandingPageObject.Lst_addons),
-//				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUser,NuboxPassIncorrecta)
-//				
-//				);
-//		
-//		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
-//				TheValue.of(suNavegador.getPageSource()),  
-//				containsString("Mensaje de error")
-//				)));
-//
-//	}
-//	
-//	@Test
-//	public void Configurar_Nubox_Mensaje_de_Rut_Vacio() {
-//
-//		when(Fer).attemptsTo(
-//				
-//				Click.on(LandingPageObject.Mnu_Configuración),
-//				Click.on(LandingPageObject.Lst_addons),
-//				EnAddons.completarConfiguraciónDeNuboxCon("",NuboxUser,NuboxPass)
-//				
-//				);
-//		
-//		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
-//				TheValue.of(suNavegador.getPageSource()),  
-//				containsString("Mensaje de error")
-//				)));
-//
-//	}
-//	
-//	@Test
-//	public void Configurar_Nubox_Mensaje_de_Usuario_Vacio() {
-//
-//		when(Fer).attemptsTo(
-//				
-//				Click.on(LandingPageObject.Mnu_Configuración),
-//				Click.on(LandingPageObject.Lst_addons),
-//				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,"",NuboxPass)
-//				
-//				);
-//		
-//		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
-//				TheValue.of(suNavegador.getPageSource()),  
-//				containsString("Mensaje de error")
-//				)));
-//
-//	}
-//	
-//	@Test
-//	public void Configurar_Nubox_Mensaje_de_Pass_Vacio() {
-//
-//		when(Fer).attemptsTo(
-//				
-//				Click.on(LandingPageObject.Mnu_Configuración),
-//				Click.on(LandingPageObject.Lst_addons),
-//				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUser,"")
-//				
-//				);
-//		
-//		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
-//				TheValue.of(suNavegador.getPageSource()),  
-//				containsString("Mensaje de error")
-//				)));
-//
-//	}
+	@Test
+	public void Configurar_Nubox_contrasena_Incorrecta() {
+
+		when(Fer).attemptsTo(
+				
+				Click.on(LandingPageObject.Mnu_Configuración),
+				Click.on(LandingPageObject.Lst_addons),
+				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUser,NuboxPassIncorrecta)
+				
+				);
+		
+		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
+				TheValue.of(suNavegador.getPageSource()),  
+				containsString("Se guardaron los datos pero las credenciales no son válidas")
+				)));
+
+	}
+	
+	@Test
+	public void Configurar_Nubox_Mensaje_de_Rut_Vacio() {
+
+		when(Fer).attemptsTo(
+				
+				Click.on(LandingPageObject.Mnu_Configuración),
+				Click.on(LandingPageObject.Lst_addons),
+				EnAddons.completarConfiguraciónDeNuboxCon("",NuboxUser,NuboxPass)
+				
+				);
+		
+		then(Fer).should(eventually(seeThat("el mensaje de 'Campo Requerido' en del campo RUT ",
+				the(LandingPageObject.lbl_rutvacioerror),
+				isPresent()
+				)));
+
+	}
+	
+	@Test
+	public void Configurar_Nubox_Mensaje_de_Usuario_Vacio() {
+
+		when(Fer).attemptsTo(
+				
+				Click.on(LandingPageObject.Mnu_Configuración),
+				Click.on(LandingPageObject.Lst_addons),
+				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,"",NuboxPass)
+				
+				);
+		
+		then(Fer).should(eventually(seeThat("el mensaje de 'Campo Requerido' en del campo Usuario ",
+				the(LandingPageObject.lbl_usuariovacioerror),
+				isPresent()
+				)));
+
+	}
+	
+	@Test
+	public void Configurar_Nubox_Mensaje_de_Pass_Vacio() {
+
+		when(Fer).attemptsTo(
+				
+				Click.on(LandingPageObject.Mnu_Configuración),
+				Click.on(LandingPageObject.Lst_addons),
+				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUser,"")
+				
+				);
+		
+		then(Fer).should(eventually(seeThat("el mensaje de 'Campo Requerido' en del campo Contraseña ",
+				the(LandingPageObject.lbl_contrasenavaciaerror),
+				isPresent()
+				)));
+
+	}
 	
 	
 	//Temporal: Para ver como quedarían los reportes de las ejecuciones en serenity.

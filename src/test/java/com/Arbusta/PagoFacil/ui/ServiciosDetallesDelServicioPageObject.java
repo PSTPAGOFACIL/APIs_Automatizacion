@@ -5,6 +5,14 @@ import org.openqa.selenium.By;
 import net.serenitybdd.screenplay.targets.Target;
 
 public class ServiciosDetallesDelServicioPageObject {
+	
+	//Botones
+	public static Target btn_Cobrar		= Target.the("el botón 'Cobrar'").locatedBy("//a[contains(text(),'Cobrar')]");
+	public static Target btn_Eliminar	= Target.the("el botón 'Eliminar'").locatedBy("//a[contains(text(),'Eliminar')]");
+	public static Target btn_Actualizar	= Target.the("el botón 'Actualizar'").locatedBy("//a[contains(text(),'Actualizar')]");
+	public static Target btn_BotonDeCobro		= Target.the("el botón 'Boton de cobro'").locatedBy("//a[contains(text(),'Boton de cobro')]");
+	public static Target btn_Settings		= Target.the("el botón 'Settings'").locatedBy("//a[contains(text(),'Settings')]");
+	
 
 	//Detalles del servicio
 
@@ -41,11 +49,6 @@ public class ServiciosDetallesDelServicioPageObject {
 		public static Target lbl_Url_Servicio				= Target.the("el campo 'Url Servicio'").locatedBy("//table[1]/tbody[1]/tr[10]/th[1]");
 		public static Target lbl_Url_Servicio_Contenido		= Target.the("el contenido de 'Url Servicio'").locatedBy("//table[1]/tbody[1]/tr[10]/td[1]");
 		
-		public static Target btn_Cobrar		= Target.the("el botón 'Cobrar'").locatedBy("//a[contains(text(),'Cobrar')]");
-		public static Target btn_Eliminar	= Target.the("el botón 'Eliminar'").locatedBy("//a[contains(text(),'Eliminar')]");
-		public static Target btn_Actualizar	= Target.the("el botón 'Actualizar'").locatedBy("//a[contains(text(),'Actualizar')]");
-		public static Target btn_BotonDeCobro		= Target.the("el botón 'Boton de cobro'").locatedBy("//a[contains(text(),'Boton de cobro')]");
-		public static Target btn_Settings		= Target.the("el botón 'Settings'").locatedBy("//a[contains(text(),'Settings')]");
 		
 		
 	//Tabla de transacciones
@@ -84,8 +87,21 @@ public class ServiciosDetallesDelServicioPageObject {
 		
 		public static Target btn_Facturar_de_tramsacción_de_la_fila(int fila) {
 			return Target.the("el botón 'Link Completar' de la tramsacción de la fila "+fila).locatedBy("//body[1]/div[1]/div[1]/div[2]/table[1]/tbody[1]/tr["+fila+"]/td[9]/a");	
+		}		
+		public static Target txt_Order_Id_Tienda_Filtro = Target.the("el campo 'Order Id Tienda'").locatedBy("//thead/tr/td[2]/input[1]");
+		public static Target txt_Monto_Filtro = Target.the("el campo 'Monto'").locatedBy("//thead/tr/td[3]/input[1]");
+		public static Target sel_Estado_Filtro = Target.the("el campo 'Estado'").locatedBy("//thead/tr/td[4]/select[1]");
+		
+		public static Target opt_Estado(String estado) {
+			return Target.the("la opción '"+estado+"'").locatedBy("//thead/tr/td[4]/select[1]/option[@value='"+estado+"']");	
 		}
 		
-		
-	
+		public static Target txt_Email_Filtro = Target.the("el campo 'Email'").locatedBy("//thead/tr/td[5]/input[1]");
+		public static Target txt_Actualizado_Filtro = Target.the("el campo 'Actualizado'").locatedBy("//thead/tr/td[6]/input[1]");
+		public static Target lbl_resultado_pago(String order_ID) {
+			return Target.the("el pago filtrado con el dato '"+order_ID+"'").locatedBy("//div[@id='w2']/table/tbody/tr/td[contains(text(),'"+order_ID+"')]");	
+		}
+		//Mensaje de facturación - Mockup
+		public static Target lbl_Mensaje_de_facturación;
 }
+//tr/td[contains(text(),'#C19')]

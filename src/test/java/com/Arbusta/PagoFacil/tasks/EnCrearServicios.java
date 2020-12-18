@@ -13,23 +13,17 @@ import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.*;
-
 import java.nio.charset.StandardCharsets;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
-
 import static java.text.MessageFormat.format;
 import java.text.MessageFormat;
-
-import com.Arbusta.PagoFacil.ui.AddonsPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosCrearServicioPageObject;
-import com.Arbusta.PagoFacil.ui.ServiciosDetallesDelServicioPageObject;
-import com.Arbusta.PagoFacil.ui.ServiciosPageObject;;
 
 public class EnCrearServicios {
+	
 	public static Target el_mensaje_de_error_del_campo_tipo = ServiciosCrearServicioPageObject.lbl_Tipo_Error;
 	public static Target el_mensaje_de_error_del_campo_Nombre_Comercio = ServiciosCrearServicioPageObject.lbl_NombreComercio_Error;
 	public static Target el_mensaje_de_error_del_campo_Plan_Asociado = ServiciosCrearServicioPageObject.lbl_PlanAsociado_error;
@@ -48,8 +42,6 @@ public class EnCrearServicios {
 				URL);
 //		String tipo = Tipo;
 		System.out.println(Titulo_De_la_tarea);
-		
-		
 		Performable Tarea= Task.where(Titulo_De_la_tarea, 
 				
 				//Tipo
@@ -74,7 +66,5 @@ public class EnCrearServicios {
 				);	
 		return Tarea;
 	}
-	
-	
 }	
 	

@@ -14,9 +14,10 @@ public class LandingPageObject {
 	public static Target lbl_solicitudExitosaBody	= Target.the("el cuerpo del mensaje de solicitud exitosa").locatedBy("//div[@class='toast-body']");
 	
 	public static Target Pup_configuracion	= Target.the("el popup de configuración").locatedBy("//div[@id='nubox___BV_modal_content_']");
+	public static Target lbl_rutvacioerror	= Target.the("el mensaje 'Campo Requerido' del campo RUT").locatedBy("//fieldset[@id='__BVID__31']/div/div");
+	public static Target lbl_usuariovacioerror	= Target.the("el mensaje 'Campo Requerido' del campo Usuario").locatedBy("//fieldset[@id='__BVID__34']/div/div");
+	public static Target lbl_contrasenavaciaerror	= Target.the("el mensaje 'Campo Requerido' del campo Contraseña").locatedBy("//fieldset[@id='__BVID__37']/div/div");
 
 	
 }
-//header[@class='toast-header']/strong
-//div[@class='toast-body']
-//div[@id='nubox___BV_modal_content_']
+//fieldset[@id='__BVID__31']/div/div

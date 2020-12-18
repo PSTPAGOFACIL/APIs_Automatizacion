@@ -61,22 +61,30 @@ public class ServiciosPageObject {
 		public static Target btn_ver_mas_id(int ServicioId) {
 			return Target.the("el botón 'Ver Más'").locatedBy("//tr[@data-key='"+ServicioId+"']/td/a[contains(text(),'Ver Más')]");
 		}
+		
+		public static Target btn_ver_mas_servicio_name(String Servicio) {
+			return Target.the("el botón 'Ver Más'").locatedBy("//td[contains(text(),'"+Servicio+"')]/parent::*/td/a[contains(text(),'Ver Más')]");
+		}
 
+		public static Target btn_link_completar_recibo(String idTienda) {
+			return Target.the("el botón 'Link Completar'").locatedBy("//tr[@data-key="+idTienda+"]/td/button[@data-target='#myModal']");
+		}
+		public static Target pu_transaccion = Target.the("el popup 'Link de la Transacción'").locatedBy("//div[@class='modal-content']/div[@class='modal-header']/h4[contains(text(),'Link de la Transacción')]");
+			
+		public static Target btn_tienda_mas_info(String idTienda) {
+			return Target.the("el botón 'Más Info'").locatedBy("//tr[@data-key='"+idTienda+"']/td/a[contains(text(),'Más Info')]");
+		}
+				
 		public static Target btn_ver_mas() {
 			return btn_ver_Mas(1);
 		}
 	
 		public static Target btn_Crear_servicio = Target.the("el botón 'Crear servicio'").locatedBy("//a[contains(text(),'Crear uno nuevo')]");
+		public static Target BTN_HABILITADO= Target.the("el encabezado de la tabla 'Habilitado'").locatedBy("//thead/tr[1]/th[5]/a[1]");
 
 		
 		public static Target btn_pagination(int num) {
-			return Target.the("el botón 'página'").locatedBy("//ul[@class='pagination']/li/a[contains(text(),'"+num+"')]");
+			return Target.the("el botón 'página {0}'").locatedBy("//ul[@class='pagination']/li/a[contains(text(),'"+num+"')]");
 		}
 		
-		public static Target lbl_paginacion = Target.the("el label 'paginación'").locatedBy("//ul[@class='pagination']");
-
-		public static Target lbl_servicios = Target.the("los servicios").locatedBy("//tr[@data-key]");
-
-
 }
-//tr[@data-key]
