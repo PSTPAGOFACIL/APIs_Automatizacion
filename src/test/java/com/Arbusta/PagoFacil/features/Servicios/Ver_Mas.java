@@ -101,7 +101,7 @@ public class Ver_Mas {
 
 		andThat(Fer).attemptsTo(Open.browserOn().the(Home), iniciarSesionCon(cUsuario,cContraseña));
 		Fer.attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
-		Fer.attemptsTo(EnMisServicios.seleccionarElServicioConelNombreDe(nombreServicio));
+		Fer.attemptsTo(EnMisServicios.seleccionarElServicioConElNombreDe(nombreServicio));
 	}
 
 	//Casos de la regresión o batería de casos de prueba.

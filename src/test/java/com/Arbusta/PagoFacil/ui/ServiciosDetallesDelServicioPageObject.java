@@ -86,7 +86,7 @@ public class ServiciosDetallesDelServicioPageObject {
 		}
 		
 		public static Target btn_Facturar_de_tramsacción_de_la_fila(int fila) {
-			return Target.the("el botón 'Link Completar' de la tramsacción de la fila "+fila).locatedBy("//body[1]/div[1]/div[1]/div[2]/table[1]/tbody[1]/tr["+fila+"]/td[9]/a");	
+			return Target.the("el botón 'Facturar' de la tramsacción de la fila "+fila).locatedBy("//body[1]/div[1]/div[1]/div[2]/table[1]/tbody[1]/tr["+fila+"]/td[9]/a");	
 		}		
 		public static Target txt_Order_Id_Tienda_Filtro = Target.the("el campo 'Order Id Tienda'").locatedBy("//thead/tr/td[2]/input[1]");
 		public static Target txt_Monto_Filtro = Target.the("el campo 'Monto'").locatedBy("//thead/tr/td[3]/input[1]");

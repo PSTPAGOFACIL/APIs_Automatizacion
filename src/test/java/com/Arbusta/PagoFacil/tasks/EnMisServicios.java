@@ -12,18 +12,23 @@ import net.serenitybdd.screenplay.targets.Target;
 import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 
 import static java.text.MessageFormat.format;
+import static org.junit.Assert.assertThat;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
 import com.Arbusta.PagoFacil.ui.AddonsPageObject;
 import com.Arbusta.PagoFacil.ui.LandingPageObject;
-import com.Arbusta.PagoFacil.ui.ServiciosPageObject;;
+import com.Arbusta.PagoFacil.ui.ServiciosPageObject;
 
 public class EnMisServicios {
 	static Actor actor = Serenity.sessionVariableCalled("Actor");
+	static WebDriver driver = BrowseTheWeb.as(actor).getDriver();
 	
-//	public static Performable seleccionarElServicioCorelNombreDe(String nombreDelServicio) {
+//	public static Performable seleccionarElServicioConElNombreDe(String nombreDelServicio) {
 //		String TituloDeLaTarea = format("busca el servicio '{0}' de su lista.",
 //				nombreDelServicio
 //				);
@@ -66,11 +71,13 @@ public class EnMisServicios {
 		return Elemento;
 	}
 
-	public static Performable seleccionarElServicioConelNombreDe(String nombreDelServicio) {
-		String TituloDeLaTarea = format("busca el servicio '{0}' de su lista.",
-				nombreDelServicio
-				);		
-		WebDriver driver = ThucydidesWebDriverSupport.getDriver();
+	public static Performable seleccionarElServicioConElNombreDe(String nombreDelServicio) {
+		
+		assertThat(driver.getCurrentUrl(), is("https://dashboard.craft.pagofacil.cl/servicios-tbk"));
+		
+		String TituloDeLaTarea = format("busca el servicio '{0}' de su lista.",nombreDelServicio);	
+System.out.println(TituloDeLaTarea );		
+		
 //		if(!driver.getCurrentUrl().toString().equalsIgnoreCase("https://dashboard.craft.pagofacil.cl/servicios-tbk")) {
 //			actor.attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
 //		}

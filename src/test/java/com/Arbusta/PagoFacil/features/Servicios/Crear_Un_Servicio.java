@@ -12,6 +12,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.when;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;
 import static net.serenitybdd.screenplay.questions.WebElementQuestion.the;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import com.Arbusta.PagoFacil.tasks.EnCrearServicios;
+import com.Arbusta.PagoFacil.tasks.EnMisServicios;
 import com.Arbusta.PagoFacil.ui.HomePageObject;
 import com.Arbusta.PagoFacil.ui.LandingPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosDetallesDelServicioPageObject;
@@ -78,7 +80,56 @@ public class Crear_Un_Servicio {
 	}
 
 	//Casos de la regresión o batería de casos de prueba.
+	@Test
+	public void ver_Servicio_por_Default() {
 
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		then(Fer).should(eventually(seeThat("un servicio con el nombre 'Servicio creado automáticamente.' ",
+				the(EnMisServicios.elServicioConElNombreDe("Servicio creado automáticamente.")),  
+				isPresent()
+				)));
+
+	}
+
+	@Test
+	public void ver_Servicio_Detalles_del_servicio() {
+
+		//when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios), EnMisServicios.seleccionarElServicio(1));
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+		Fer.attemptsTo(EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		then(Fer).should(seeThat("El campo 'Nombre del comercio'",the(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio),isPresent()),
+				seeThat("El contenido de 'Nombre del comercio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio_Contenido).asAString(),is("Servicio creado automáticamente.")),
+
+				seeThat("El campo 'token Secret'",the(ServiciosDetallesDelServicioPageObject.lbl_Token_Secret),isPresent()),
+				seeThat("El contenido de 'token Secret'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Token_Secret_Contenido).asAString(),not(is(""))),
+
+				seeThat("El campo 'Tipo'",the(ServiciosDetallesDelServicioPageObject.lbl_Tipo),isPresent()),
+				seeThat("El contenido del campo 'Tipo'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Tipo_Contenido).asAString(),is("SIN ECOMMERCE")),
+
+				seeThat("El campo 'recurrencia'",the(ServiciosDetallesDelServicioPageObject.lbl_Recurrencia),isPresent()),
+				seeThat("El contenido del campo 'Recurrencia'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Recurrencia_Contenido).asAString(),is("PAYPERUSE")),
+
+				seeThat("El campo 'Plan relacionado'",the(ServiciosDetallesDelServicioPageObject.lbl_Plan_Relacionado),isPresent()),
+				seeThat("El contenido del campo 'Plan relacionado'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Plan_Relacionado_Contenido).asAString(),is("INDEPENDIENTE TRIAL (3 Meses)")),
+
+				seeThat("El campo 'Habilitado'",the(ServiciosDetallesDelServicioPageObject.lbl_Habilitado),isPresent()),
+				seeThat("El contenido del campo 'Habilitado'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Habilitado_Contenido).asAString(),is("Si")),
+
+				seeThat("El campo 'Fecha de creación'",the(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Creación),isPresent()),
+				seeThat("El contenido del campo 'Fecha de creación'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Creación_Contenido).asAString(),not(is(""))),
+
+				seeThat("El campo 'Fecha de actualización'",the(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Actualización),isPresent()),
+				seeThat("El contenido del campo 'Fecha de actualización'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Actualización_contenido).asAString(),not(is(""))),
+
+				seeThat("El campo 'URl Servicio'",the(ServiciosDetallesDelServicioPageObject.lbl_Url_Servicio),isPresent()),
+				seeThat("El contenido del campo 'URl Servicio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Url_Servicio_Contenido).asAString(),is("https://www.pagofacil.cl/promo/"))
+				);
+
+	}
+	
+	
 //	Parametrizables por CSV
 	@Test
 	public void creación_de_Servicios() {

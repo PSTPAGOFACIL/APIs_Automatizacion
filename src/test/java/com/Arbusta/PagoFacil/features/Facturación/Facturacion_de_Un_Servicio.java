@@ -19,6 +19,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.Arbusta.PagoFacil.tasks.EnAddons;
 import com.Arbusta.PagoFacil.tasks.EnDetallesDelServicio;
@@ -27,6 +29,11 @@ import com.Arbusta.PagoFacil.tasks.EnLogin;
 import com.Arbusta.PagoFacil.tasks.EnMisServicios;
 
 import net.serenitybdd.core.Serenity;
+//import net.serenitybdd.core.annotations.findby.By;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.serenitybdd.screenplay.Actor;
@@ -34,6 +41,7 @@ import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.Open;
+import net.serenitybdd.screenplay.actions.SelectFromOptions;
 import net.serenitybdd.screenplay.questions.TheValue;
 import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.waits.Wait;
@@ -42,15 +50,21 @@ import net.serenitybdd.screenplay.questions.targets.TargetText;
 import net.serenitybdd.screenplay.questions.targets.TheTarget;
 import static net.serenitybdd.screenplay.questions.WebElementQuestion.the;
 import static net.serenitybdd.screenplay.questions.WebElementQuestion.valueOf;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isEnabled;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isNotEnabled;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Narrative;
 import net.thucydides.core.annotations.Pending;
 import net.thucydides.junit.annotations.UseTestDataFrom;
+import java.util.*;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.*;
 import static org.hamcrest.Matchers.containsString;
 
 import com.Arbusta.PagoFacil.ui.AddonsPageObject;
+import com.Arbusta.PagoFacil.ui.FacturacionNuboxPageObject;
 import com.Arbusta.PagoFacil.ui.LandingPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosDetallesDelServicioPageObject;
 import com.Arbusta.PagoFacil.ui.HomePageObject;
@@ -59,7 +73,7 @@ import static com.Arbusta.PagoFacil.tasks.EnLogin.*;
 
 @RunWith(SerenityParameterizedRunner.class)
 //@UseTestDataFrom("credenciales.csv,configuracionesNubox.csv")
-@UseTestDataFrom("credenciales.csv")
+@UseTestDataFrom("credencialesTestFacturación.csv")
 @Narrative(text = { "Dado que soy un usuario valido en el sitio.", 
 		"Cuando ingreso al mismo con un usuario válido.",
 "Deberia poder ingresar a la pantalla principal donde se encuentran todas las secciones que se usan dentro del sistema."})
@@ -86,8 +100,8 @@ public class Facturacion_de_Un_Servicio {
 	String Fecha_desde;
 	String Fecha_hasta;
 	String Tipo_de_factura;
-	String Fercha;
-	String Fercha_de_Vencimiento;
+	String Fecha;
+	String Fecha_de_Vencimiento;
 
 
 	private HomePageObject Home;
@@ -106,86 +120,511 @@ public class Facturacion_de_Un_Servicio {
 	//Casos de la regresión o batería de casos de prueba.
 
 	@Test
-	public void ver_Servicio_por_Default() {
-
-		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
-
-		then(Fer).should(eventually(seeThat("un servicio con el nombre 'Servicio creado automáticamente.' ",
-				the(EnMisServicios.elServicioConElNombreDe("Servicio creado automáticamente.")),  
-				isPresent()
-				)));
-
-	}
-
-	@Test
-	public void ver_Servicio_Detalles_del_servicio() {
-
-		//when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios), EnMisServicios.seleccionarElServicio(1));
-		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
-		Fer.attemptsTo(EnMisServicios.seleccionarElServicioConelNombreDe("Servicio creado automáticamente."));
-
-		then(Fer).should(seeThat("El campo 'Nombre del comercio'",the(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio),isPresent()),
-				seeThat("El contenido de 'Nombre del comercio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio_Contenido).asAString(),is("Servicio creado automáticamente.")),
-
-				seeThat("El campo 'token Secret'",the(ServiciosDetallesDelServicioPageObject.lbl_Token_Secret),isPresent()),
-				seeThat("El contenido de 'token Secret'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Token_Secret_Contenido).asAString(),not(is(""))),
-
-				seeThat("El campo 'Tipo'",the(ServiciosDetallesDelServicioPageObject.lbl_Tipo),isPresent()),
-				seeThat("El contenido del campo 'Tipo'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Tipo_Contenido).asAString(),is("SIN ECOMMERCE")),
-
-				seeThat("El campo 'recurrencia'",the(ServiciosDetallesDelServicioPageObject.lbl_Recurrencia),isPresent()),
-				seeThat("El contenido del campo 'Recurrencia'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Recurrencia_Contenido).asAString(),is("PAYPERUSE")),
-
-				seeThat("El campo 'Plan relacionado'",the(ServiciosDetallesDelServicioPageObject.lbl_Plan_Relacionado),isPresent()),
-				seeThat("El contenido del campo 'Plan relacionado'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Plan_Relacionado_Contenido).asAString(),is("INDEPENDIENTE TRIAL (3 Meses)")),
-
-				seeThat("El campo 'Habilitado'",the(ServiciosDetallesDelServicioPageObject.lbl_Habilitado),isPresent()),
-				seeThat("El contenido del campo 'Habilitado'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Habilitado_Contenido).asAString(),is("Si")),
-
-				seeThat("El campo 'Fecha de creación'",the(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Creación),isPresent()),
-				seeThat("El contenido del campo 'Fecha de creación'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Creación_Contenido).asAString(),not(is(""))),
-
-				seeThat("El campo 'Fecha de actualización'",the(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Actualización),isPresent()),
-				seeThat("El contenido del campo 'Fecha de actualización'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Fecha_Actualización_contenido).asAString(),not(is(""))),
-
-				seeThat("El campo 'URl Servicio'",the(ServiciosDetallesDelServicioPageObject.lbl_Url_Servicio),isPresent()),
-				seeThat("El contenido del campo 'URl Servicio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Url_Servicio_Contenido).asAString(),is("https://www.pagofacil.cl/promo/"))
-				);
-
-	}
-
-	@Test
-	@Pending
-	public void Facturar_un_servicio() {
+	//@Pending
+	public void Facturar_cargar_factura_correctamente() {
 		String estado = "COMPLETADA";
 		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
 
 		Fer.attemptsTo(
-				EnMisServicios.seleccionarElServicioConelNombreDe("Servicio creado automáticamente."),
-				EnDetallesDelServicio.buscar_transacción_con_estado(estado),
-				EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1),
-				EnFacturacion.completar_la_información_del_emisor_con(
-						RUT_Contraparte, 
-						Razon_Social_contraparte, 
-						Comuna_contraparte,
-						Folio,
-						Codigo_de_sucursal, 
-						Dirección_contraparte, 
-						Fecha_desde,
-						Fecha_hasta, 
-						Tipo_de_factura, 
-						Fercha,
-						Fercha_de_Vencimiento),
-				EnFacturacion.cargar_la_factura()
-				);
-		
-		then(Fer).should(
-				seeThat("el mensaje de la carga de la factura",the(ServiciosDetallesDelServicioPageObject.lbl_Mensaje_de_facturación),isPresent()),
-				seeThat("el mensaje de la carga de la factura",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Mensaje_de_facturación).asAString(),is("la factura se ha cargado con éxito"))
-				);
-		
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la carga de la factura",TheValue.of(suNavegador.getPageSource()),  
+						containsString("Factura emitida con éxito")
+						)));
+
 	}
 
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_RUT_Contraparte_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				"", 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",TheValue.of(suNavegador.getPageSource()),  
+						containsString("Campo requerido. El formato debe ser XXXXXXX-Y")
+						)));
+
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Razon_Social_contraparte_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				"", 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.lbl_Razon_Social_contraparte_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Comuna_contraparte_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				"",
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.lbl_Comuna_contraparte_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Folio_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				"",
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la carga de la factura",TheValue.of(suNavegador.getPageSource()),  
+						containsString("Factura emitida con éxito")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Codigo_de_sucursal_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				"", 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.txt_Codigo_de_sucursal_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Dirección_contraparte_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				"", 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.lbl_Dirección_contraparte_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Fecha_desde_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				"",
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.lbl_Fecha_desde_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Fecha_hasta_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				"", 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.cal_Fecha_hasta_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Tipo_de_factura_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				"", 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.sel_Tipo_de_factura),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Fecha_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				"",
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.lbl_Fecha_error),  
+						is("Campo requerido")
+						)));
+	}
+
+	@Test
+	//@Pending
+	public void Facturar_cargar_factura_Fecha_de_Vencimiento_vacío() {
+		String estado = "COMPLETADA";
+		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+
+		Fer.attemptsTo(EnDetallesDelServicio.buscar_transacción_con_estado(estado));
+
+		Fer.remember("Monto total", ServiciosDetallesDelServicioPageObject.lbl_Monto_de_tramsacción_de_la_fila(1).resolveFor(Fer).getText().replace(".", "").replace(" CLP", ""));
+		Fer.attemptsTo(EnDetallesDelServicio.Crear_factura_de_la_transaccion_Nro(1));
+
+		System.out.println("Valor Rut: " +RUT_Contraparte);
+
+		Fer.attemptsTo(EnFacturacion.completar_la_información_del_emisor_con(
+				RUT_Contraparte, 
+				Razon_Social_contraparte, 
+				Comuna_contraparte,
+				Folio,
+				Codigo_de_sucursal, 
+				Dirección_contraparte, 
+				Fecha_desde,
+				Fecha_hasta, 
+				Tipo_de_factura, 
+				Fecha,
+				Fecha_de_Vencimiento));
+
+		//Ver en consola que valor toma.
+		System.out.println("El monto que se recuerda es: " + Fer.recall("Monto total").toString());
+
+		Fer.attemptsTo(EnFacturacion.añadir_un_producto_con_los_datos("Producto 1", "1", Fer.recall("Monto total").toString(), "Descripción de ejemplo"));
+
+		Fer.attemptsTo(EnFacturacion.cargar_la_factura());
+
+		then(Fer).should(eventually(
+				seeThat("el mensaje de la pantalla de la factura",the(FacturacionNuboxPageObject.cal_Fecha_de_Vencimiento_error),  
+						is("Campo requerido")
+						)));
+	}
 
 	//Temporal: Para ver como quedarían los reportes de las ejecuciones en serenity.
 	@After
