@@ -2,9 +2,10 @@ package com.Arbusta.PagoFacil.ui;
 
 import org.openqa.selenium.By;
 
+import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.targets.Target;
 
-public class FacturacionNuboxPageObject {
+public class FacturacionNuboxPageObject extends PageObject {
 	//Link a transacción.
 	public static Target lbl_Link_Transacción = Target.the("el link de la Transacción").locatedBy("//div[1]/ul[1]/li[4]/a[1]");
 
@@ -78,4 +79,8 @@ public class FacturacionNuboxPageObject {
 	public static Target lbl_Precio_Final_producto (int fila) {return Target.the("el campo 'Precio Final'").locatedBy("//tbody/tr["+fila+"]/td[3]");}
 	public static Target lbl_Total_producto(int fila) {return Target.the("el campo 'Total'").locatedBy("//tbody/tr["+fila+"]/td[4]");}
 	public static Target lbl_Acciones_producto (int fila) {return Target.the("el campo 'Acciones'").locatedBy("//tbody/tr["+fila+"]/td[5]/button");}
+	
+	//Mensajes del estado de la factura.
+//	public static Target Mensaje_de_factura_exitosa= Target.the("el mensaje 'Factura emitida con éxito'").locatedBy("//strong[contains(.,'Factura emitida con éxito')]");
+	public static Target Mensaje_de_factura_o_boleta = Target.the("el mensaje de la factura o boleta").locatedBy("//div/header/strong");
 }

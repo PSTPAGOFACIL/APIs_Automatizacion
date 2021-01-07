@@ -1,2 +1,2 @@
-cUsuario,cContraseña,nombreServicio,idServicio,idTiendaLinkCompletar,idTiendaLinkRecibo
-luz.gutierrez@arbusta.net,Luzmaria09*,Servicio creado automáticamente.,13775,19581,19577
+cUsuario,cContraseña,nombreServicio,idServicio,idTiendaLinkCompletar,idTiendaLinkRecibo,order_ID,monto,mail,fecha,fechaIncorrecta,emailIncorrecto,orderIdTiendaIncorrecto,montoIncorrecto
+luz.gutierrez@arbusta.net,Luzmaria09*,Servicio creado automáticamente.,13775,19897,19874,19577,4.321,pedro.salas+cobro@arbusta.net,2020-12-23 13:22:40,900 a.c,abcdef,ABC,ABC

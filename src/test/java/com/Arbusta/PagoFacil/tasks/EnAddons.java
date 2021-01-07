@@ -1,9 +1,11 @@
 package com.Arbusta.PagoFacil.tasks;
-
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;
+import static net.serenitybdd.screenplay.questions.WebElementQuestion.the;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.waits.Wait;
 
 import static java.text.MessageFormat.format;
 
@@ -18,6 +20,7 @@ public class EnAddons {
 				NuboxPass);
 		
 		return Task.where("{0} "+TituloDeLaTarea,
+				Wait.until(the(AddonsPageObject.BTN_Conf_Nubox), isPresent()).forNoLongerThan(10).seconds(),
 				Click.on(AddonsPageObject.BTN_Conf_Nubox),
 				Enter.theValue(NuboxRUT).into(AddonsPageObject.Txt_RUT),
 				Enter.theValue(NuboxUser).into(AddonsPageObject.Txt_User),

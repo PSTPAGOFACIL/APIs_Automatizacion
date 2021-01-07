@@ -86,7 +86,8 @@ public class ServiciosDetallesDelServicioPageObject {
 		}
 		
 		public static Target btn_Facturar_de_tramsacción_de_la_fila(int fila) {
-			return Target.the("el botón 'Facturar' de la tramsacción de la fila "+fila).locatedBy("//body[1]/div[1]/div[1]/div[2]/table[1]/tbody[1]/tr["+fila+"]/td[9]/a");	
+
+			return Target.the("el botón 'Facturar' de la tramsacción de la fila "+fila).locatedBy("//body[1]/div[1]/div[1]/div[2]/table[1]/tbody[1]/tr["+fila+"]/td[9]/a[1]");	
 		}		
 		public static Target txt_Order_Id_Tienda_Filtro = Target.the("el campo 'Order Id Tienda'").locatedBy("//thead/tr/td[2]/input[1]");
 		public static Target txt_Monto_Filtro = Target.the("el campo 'Monto'").locatedBy("//thead/tr/td[3]/input[1]");
@@ -96,12 +97,25 @@ public class ServiciosDetallesDelServicioPageObject {
 			return Target.the("la opción '"+estado+"'").locatedBy("//thead/tr/td[4]/select[1]/option[@value='"+estado+"']");	
 		}
 		
+		public static Target lbl_resultado_pago(String dato) {
+			return Target.the("el pago filtrado con el dato '"+dato+"'").locatedBy("//div[@id='w2']/table/tbody/tr/td[contains(text(),'"+dato+"')]");	
+		}
+		
+		public static Target lbl_resultado_pago_por_email(String email) {
+			return Target.the("el pago filtrado con el dato '"+email+"'").locatedBy("//div[@id='w2']/table/tbody/tr/td/a[contains(text(),'"+email+"')]");	
+		}
+		
+		public static Target lbl_Transaccion_por_posicion(String posicion) {
+			return Target.the("la transacción de la posición '"+posicion+"'").locatedBy("//tr[@data-key]/td[1][.='"+posicion+"']");	
+		}
+		
+		public static Target lbl_Tabla_Pagos = Target.the("la tabla de pagos").locatedBy("//thead/tr/th[contains(text(),'#')]");
+		public static Target lbl_Error_numero_entero = Target.the("el mensaje de error").locatedBy("//div[contains(text(),'Monto debe ser un número entero.')]");
+		public static Target lbl_Resultados = Target.the("los resultados de los pagos").locatedBy("//tr[@data-key]");
+
 		public static Target txt_Email_Filtro = Target.the("el campo 'Email'").locatedBy("//thead/tr/td[5]/input[1]");
 		public static Target txt_Actualizado_Filtro = Target.the("el campo 'Actualizado'").locatedBy("//thead/tr/td[6]/input[1]");
-		public static Target lbl_resultado_pago(String order_ID) {
-			return Target.the("el pago filtrado con el dato '"+order_ID+"'").locatedBy("//div[@id='w2']/table/tbody/tr/td[contains(text(),'"+order_ID+"')]");	
-		}
+		
 		//Mensaje de facturación - Mockup
 		public static Target lbl_Mensaje_de_facturación;
 }
-//tr/td[contains(text(),'#C19')]

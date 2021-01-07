@@ -14,6 +14,8 @@ import net.thucydides.core.webdriver.ThucydidesWebDriverSupport;
 import static java.text.MessageFormat.format;
 import static org.junit.Assert.assertThat;
 
+import java.text.MessageFormat;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -22,6 +24,7 @@ import static org.hamcrest.Matchers.not;
 
 import com.Arbusta.PagoFacil.ui.AddonsPageObject;
 import com.Arbusta.PagoFacil.ui.LandingPageObject;
+import com.Arbusta.PagoFacil.ui.ServiciosDetallesDelServicioPageObject;
 import com.Arbusta.PagoFacil.ui.ServiciosPageObject;
 
 public class EnMisServicios {
@@ -75,7 +78,7 @@ public class EnMisServicios {
 		
 		assertThat(driver.getCurrentUrl(), is("https://dashboard.craft.pagofacil.cl/servicios-tbk"));
 		
-		String TituloDeLaTarea = format("busca el servicio '{0}' de su lista.",nombreDelServicio);	
+		String TituloDeLaTarea = MessageFormat.format("busca el servicio {0} de su lista.",nombreDelServicio);	
 System.out.println(TituloDeLaTarea );		
 		
 //		if(!driver.getCurrentUrl().toString().equalsIgnoreCase("https://dashboard.craft.pagofacil.cl/servicios-tbk")) {
@@ -103,5 +106,45 @@ System.out.println(TituloDeLaTarea );
 				) ;
 
 	}
+	
+	public static Performable seleccionarLaTransaccionConElId(String id) {
+				
+		String TituloDeLaTarea = MessageFormat.format(" selecciona la transacción con el id {0}.",id);	
+System.out.println(TituloDeLaTarea );		
+		
+//		if(!driver.getCurrentUrl().toString().equalsIgnoreCase("https://dashboard.craft.pagofacil.cl/servicios-tbk")) {
+//			actor.attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+//		}
+		int transaccion = driver.findElements(By.xpath("//tr[@data-key="+id+"]/td/button[@data-target='#myModal']")).size();
+		int paginacion = driver.findElements(By.xpath("//ul[@class='pagination']")).size();
+		if(transaccion==0 && paginacion > 0) {
+			int paginas = driver.findElements(By.xpath("//ul[@class='pagination']/li")).size() - 2;
+			for(int i = 2; i<=paginas;i++) {
+				actor.attemptsTo(
+						Scroll.to(ServiciosPageObject.btn_pagination(i)),
+						Click.on(ServiciosPageObject.btn_pagination(i))
+						);
+				transaccion = driver.findElements(By.xpath("//tr[@data-key="+id+"]/td/button[@data-target='#myModal']")).size();
+				if(transaccion>0) {
+					break;
+				}
+			}
+			
+		}
+		
+		int ubicacionAnterior = Integer.parseInt(driver.findElement(By.xpath("//tr[@data-key="+id+"]/td")).getText()) - 1;
+		
+		if(ubicacionAnterior == 0) {
+			return Task.where("{0} "+TituloDeLaTarea,
+					Scroll.to(ServiciosDetallesDelServicioPageObject.lbl_Tabla_Pagos)
+					) ;
+//			Scroll.to(ServiciosDetallesDelServicioPageObject.lbl_Tabla_Pagos)
+		}else {
+			return Task.where("{0} "+TituloDeLaTarea,
+					Scroll.to(ServiciosDetallesDelServicioPageObject.lbl_Transaccion_por_posicion(String.valueOf(ubicacionAnterior)))
+					) ;
+		}
+
+}
 	
 }

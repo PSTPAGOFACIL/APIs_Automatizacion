@@ -131,7 +131,7 @@ public class login {
 
 
 	private Predicate isVisible() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

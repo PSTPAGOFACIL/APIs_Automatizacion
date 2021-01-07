@@ -64,7 +64,6 @@ import static com.Arbusta.PagoFacil.tasks.EnLogin.*;
 
 
 @RunWith(SerenityParameterizedRunner.class)
-//@UseTestDataFrom("credenciales.csv,configuracionesNubox.csv")
 @UseTestDataFrom("credencialesTestVerMas.csv")
 @Narrative(text = { "Dado que soy un usuario valido en el sitio.", 
 		"Cuando voy a la pantalla de Servicios.",
@@ -87,8 +86,15 @@ public class Ver_Mas {
 	String idServicio;
 	String idTiendaLinkCompletar;
 	String idTiendaLinkRecibo;
-	String order_ID = "19577";
-
+	String order_ID;
+	String monto;
+	String mail;
+	String fecha;
+	String fechaIncorrecta;
+	String emailIncorrecto;
+	String orderIdTiendaIncorrecto;
+	String montoIncorrecto;
+	
 	private HomePageObject Home;
 
 	//Setup.
@@ -117,7 +123,7 @@ public class Ver_Mas {
 	@Test
 	public void link_Completar() {
 		Fer.attemptsTo(
-				Scroll.to(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkCompletar)),
+				EnMisServicios.seleccionarLaTransaccionConElId(idTiendaLinkCompletar),
 				Click.on(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkCompletar))
 				);
 		
@@ -128,7 +134,7 @@ public class Ver_Mas {
 	@Test
 	public void link_Completar_Mas_Info() {
 		Fer.attemptsTo(
-				Scroll.to(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkCompletar)),
+				EnMisServicios.seleccionarLaTransaccionConElId(idTiendaLinkCompletar),
 				Click.on(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkCompletar))
 				);
 		
@@ -146,7 +152,7 @@ public class Ver_Mas {
 	@Test
 	public void link_Recibo() {
 		Fer.attemptsTo(
-				Scroll.to(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkRecibo)),
+				EnMisServicios.seleccionarLaTransaccionConElId(idTiendaLinkRecibo),
 				Click.on(ServiciosPageObject.btn_link_completar_recibo(idTiendaLinkRecibo))
 				);
 		
@@ -157,7 +163,7 @@ public class Ver_Mas {
 	@Test
 	public void link_Recibo_Mas_Info() {
 		Fer.attemptsTo(
-				Scroll.to(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkRecibo)),
+				EnMisServicios.seleccionarLaTransaccionConElId(idTiendaLinkRecibo),
 				Click.on(ServiciosPageObject.btn_tienda_mas_info(idTiendaLinkRecibo))
 				);
 		
@@ -180,10 +186,208 @@ public class Ver_Mas {
 		
 		then(Fer).should(eventually(
 				seeThat(
-						"El resultado del filtro mediante el order id tienda'"
+						"El resultado del filtro mediante el order id tienda"
 						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago(order_ID))
 						,isPresent())
 				));
+	}
+	
+	@Test
+	public void filtrar_por_order_id_Tienda_incorrecto() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_order_ID_tienda(orderIdTiendaIncorrecto)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante el order id tienda incorrecto"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_Resultados)
+						,isNotPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Monto() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_el_monto(monto)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante el monto"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago(monto))
+						,isPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Monto_incorrecto() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_el_monto(montoIncorrecto)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante el monto incorrecto"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_Error_numero_entero)
+						,isPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Email() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_el_mail(mail)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante el mail"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago_por_email(mail))
+						,isPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Email_incorrecto() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_el_mail(emailIncorrecto)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante el email incorrecto"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_Resultados)
+						,isNotPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Actualizado() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_Fecha_Actualizada(fecha)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante la fecha de actualización"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago(fecha))
+						,isPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Actualizado_incorrecto() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_Fecha_Actualizada(fechaIncorrecta)
+				);
+		
+		then(Fer).should(eventually(
+				seeThat(
+						"El resultado del filtro mediante la fecha de actualización incorrecta"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_Resultados)
+						,isNotPresent())
+				));
+	}
+	
+	@Test
+	public void filtrar_por_Estado_Completada() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_estado("COMPLETADA")
+				);
+		
+		then(Fer).should(				
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado fallida"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("FALLIDA"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado pendiente"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("PENDIENTE"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado anulada"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("ANULADA"))
+						,isNotPresent())
+				)
+				);
+	}
+	
+	@Test
+	public void filtrar_por_Estado_Fallida() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_estado("FALLIDA")
+				);
+		
+		then(Fer).should(
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado completada"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("COMPLETADA"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado pendiente"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("PENDIENTE"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado anulada"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("ANULADA"))
+						,isNotPresent())
+				)
+				);
+	}
+	
+	@Test
+	public void filtrar_por_Estado_Pendiente() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_estado("PENDIENTE")
+				);
+		
+		then(Fer).should(
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado completada"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("COMPLETADA"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado fallida"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("FALLIDA"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado anulada"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("ANULADA"))
+						,isNotPresent())
+				)
+				);
+	}
+	
+	@Test
+	public void filtrar_por_Estado_Anulada() {
+		Fer.attemptsTo(
+				EnDetallesDelServicio.buscar_transacción_con_estado("ANULADA")
+				);
+		
+		then(Fer).should(
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado completada"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("COMPLETADA"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado fallida"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("FALLIDA"))
+						,isNotPresent())
+				),
+				eventually(seeThat(
+						"El resultado del filtro mediante el estado pendiente"
+						,the(ServiciosDetallesDelServicioPageObject.lbl_resultado_pago("PENDIENTE"))
+						,isNotPresent())
+				)
+				);
 	}
 	
 	//Temporal: Para ver como quedarían los reportes de las ejecuciones en serenity.
@@ -192,7 +396,7 @@ public class Ver_Mas {
 		try {
 			Runtime.getRuntime().exec("cmd.exe /c mvn serenity:aggregate");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

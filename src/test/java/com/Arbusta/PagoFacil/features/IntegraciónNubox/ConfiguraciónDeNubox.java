@@ -74,7 +74,7 @@ public class ConfiguraciónDeNubox {
 	String NuboxPass;
 	String NuboxRUTIncorrecto;
 	String NuboxUserIncorrecto;
-	String NuboxPassIncorrecta;
+	String NuboxPassIncorrecto;
 
 	private HomePageObject Home;
 	
@@ -160,25 +160,25 @@ public class ConfiguraciónDeNubox {
 				)));
 
 	}
-////	
-//	@Test
-//	public void Configurar_Nubox_RUT_Incorrecto() {
-//
-//		when(Fer).attemptsTo(
-//				
-//				Click.on(LandingPageObject.Mnu_Configuración),
-//				Click.on(LandingPageObject.Lst_addons),
-//				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUTIncorrecto,NuboxUser,NuboxPass)
-//				
-//				);
-//		
-//		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
-//				TheValue.of(suNavegador.getPageSource()),  
-//				containsString("Mensaje de error")
-//				)));
-//
-//	}
 //	
+	@Test
+	public void Configurar_Nubox_RUT_Incorrecto() {
+
+		when(Fer).attemptsTo(
+				
+				Click.on(LandingPageObject.Mnu_Configuración),
+				Click.on(LandingPageObject.Lst_addons),
+				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUTIncorrecto,NuboxUser,NuboxPass)
+				
+				);
+		
+		then(Fer).should(eventually(seeThat("el mensaje de error en la pantalla ",
+				TheValue.of(suNavegador.getPageSource()),  
+				containsString("Mensaje de error")
+				)));
+
+	}
+	
 	@Test
 	public void Configurar_Nubox_usuario_Incorrecto() {
 
@@ -204,7 +204,7 @@ public class ConfiguraciónDeNubox {
 				
 				Click.on(LandingPageObject.Mnu_Configuración),
 				Click.on(LandingPageObject.Lst_addons),
-				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUser,NuboxPassIncorrecta)
+				EnAddons.completarConfiguraciónDeNuboxCon(NuboxRUT,NuboxUser,NuboxPassIncorrecto)
 				
 				);
 		
@@ -276,7 +276,6 @@ public class ConfiguraciónDeNubox {
 		try {
 			Runtime.getRuntime().exec("cmd.exe /c mvn serenity:aggregate");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

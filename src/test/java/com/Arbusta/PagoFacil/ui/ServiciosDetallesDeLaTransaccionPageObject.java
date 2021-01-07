@@ -38,12 +38,12 @@ public class ServiciosDetallesDeLaTransaccionPageObject {
 	public static Target lbl_Complete_URL_Contenido 	= Target.the("el campo 'Complete URL'")		.locatedBy("//body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[12]/td[1]");
 	public static Target lbl_CancelURL_Contenido 		= Target.the("el campo 'CancelURL'")		.locatedBy("//body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[13]/td[1]");
 	public static Target lbl_Browserdata_Contenido 		= Target.the("el campo 'Browserdata'")		.locatedBy("//body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[14]/td[1]");
-	public static Target lbl_Estado_Factura_Contenido 	= Target.the("el campo 'Estado Factura'")	.locatedBy("//body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[15]/td[1]");	
+	public static Target lbl_Estado_Factura_Contenido 	= Target.the("el campo 'Estado Factura'")	.locatedBy("//td[@id='estado-factura']");	
 	
 	//Opciones de los detalles.
 	public static Target btn_Ver_anulaciones = Target.the("el botón 'Ver anulaciones'").locatedBy("//button[contains(text(),'Ver anulaciones')]");
 	public static Target btn_Anular = Target.the("el botón 'Anular'").locatedBy("//button[contains(text(),'Anular')]");
-	public static Target btn_Facturar = Target.the("el botón 'Facturar'").located(By.id("btn-facturar"));
-	public static Target btn_PDF = Target.the("el botón 'PDF'").located(By.id("btn-facturar"));
+	public static Target btn_Facturar = Target.the("el botón 'Facturar'").locatedBy("//a[contains(text(),'Facturar')]");
+	public static Target btn_PDF = Target.the("el botón 'PDF'").located(By.id("btn-pdf"));
 	public static Target btn_XML = Target.the("el botón 'XML'").located(By.id("btn-xml"));
 }

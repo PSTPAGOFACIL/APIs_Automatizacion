@@ -74,16 +74,14 @@ public class Crear_Un_Servicio {
 
 		andThat(Fer).attemptsTo(Open.browserOn().the(Home), iniciarSesionCon(cUsuario,cContraseña));
 		Fer.attemptsTo(
-				Click.on(LandingPageObject.Mnu_MisServicios),
-				Click.on(ServiciosPageObject.btn_Crear_servicio)
-				);
+				Click.on(LandingPageObject.Mnu_MisServicios));
 	}
 
 	//Casos de la regresión o batería de casos de prueba.
 	@Test
 	public void ver_Servicio_por_Default() {
 
-		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
+//		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
 
 		then(Fer).should(eventually(seeThat("un servicio con el nombre 'Servicio creado automáticamente.' ",
 				the(EnMisServicios.elServicioConElNombreDe("Servicio creado automáticamente.")),  
@@ -95,9 +93,8 @@ public class Crear_Un_Servicio {
 	@Test
 	public void ver_Servicio_Detalles_del_servicio() {
 
-		//when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios), EnMisServicios.seleccionarElServicio(1));
-		when(Fer).attemptsTo(Click.on(LandingPageObject.Mnu_MisServicios));
-		Fer.attemptsTo(EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
+		Fer.attemptsTo(
+				EnMisServicios.seleccionarElServicioConElNombreDe("Servicio creado automáticamente."));
 
 		then(Fer).should(seeThat("El campo 'Nombre del comercio'",the(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio),isPresent()),
 				seeThat("El contenido de 'Nombre del comercio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio_Contenido).asAString(),is("Servicio creado automáticamente.")),
@@ -132,11 +129,11 @@ public class Crear_Un_Servicio {
 	
 //	Parametrizables por CSV
 	@Test
-	public void creación_de_Servicios() {
+	public void creación_de_Servicios_test() {
 //		System.out.println(Plan);
-
-
-		when(Fer).attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, Nombre, Plan, URL));
+		when(Fer).attemptsTo(Click.on(ServiciosPageObject.btn_Crear_servicio));
+		
+		Fer.attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, Nombre, Plan, URL));
 		
 		then(Fer).should(seeThat("El campo 'Nombre del comercio'",the(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio),isPresent()),
 				seeThat("El contenido de 'Nombre del comercio'",Text.of(ServiciosDetallesDelServicioPageObject.lbl_Nombre_Comercio_Contenido).asAString(),is(Nombre))
@@ -146,8 +143,9 @@ public class Crear_Un_Servicio {
 	
 	@Test
 	public void creación_de_Servicios_Tipo_Vacío() {
-
-		when(Fer).attemptsTo(EnCrearServicios.crear_un_servicio_con("", Nombre, Plan, URL));
+		when(Fer).attemptsTo(Click.on(ServiciosPageObject.btn_Crear_servicio));
+		
+		Fer.attemptsTo(EnCrearServicios.crear_un_servicio_con("", Nombre, Plan, URL));
 		
 		then(Fer).should(
 				seeThat("El mensaje de error el campo 'Tipo'",the(EnCrearServicios.el_mensaje_de_error_del_campo_tipo),isPresent()),
@@ -159,7 +157,9 @@ public class Crear_Un_Servicio {
 	@Test
 	public void creación_de_Servicios_Nombre_Vacío() {
 
-		when(Fer).attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, "", Plan, URL));
+		when(Fer).attemptsTo(Click.on(ServiciosPageObject.btn_Crear_servicio));
+		
+		Fer.attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, "", Plan, URL));
 		
 		then(Fer).should(
 				seeThat("El mensaje de error el campo 'Nombre del comercio'",the(EnCrearServicios.el_mensaje_de_error_del_campo_Nombre_Comercio),isPresent()),
@@ -170,8 +170,9 @@ public class Crear_Un_Servicio {
 	
 	@Test
 	public void creación_de_Servicios_Plan_Vacío() {
-
-		when(Fer).attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, Nombre, "", URL));
+		when(Fer).attemptsTo(Click.on(ServiciosPageObject.btn_Crear_servicio));
+		
+		Fer.attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, Nombre, "", URL));
 		
 		then(Fer).should(
 				seeThat("El mensaje de error el campo 'Plan Asociado'",the(EnCrearServicios.el_mensaje_de_error_del_campo_Plan_Asociado),isPresent()),
@@ -182,8 +183,9 @@ public class Crear_Un_Servicio {
 	
 	@Test
 	public void creación_de_Servicios_URL_Vacío() {
-
-		when(Fer).attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, Nombre, Plan, ""));
+		when(Fer).attemptsTo(Click.on(ServiciosPageObject.btn_Crear_servicio));
+		
+		Fer.attemptsTo(EnCrearServicios.crear_un_servicio_con(Tipo, Nombre, Plan, ""));
 		
 		then(Fer).should(
 				seeThat("El mensaje de error el campo 'URL Servicio'",the(EnCrearServicios.el_mensaje_de_error_del_campo_URL_Servicio),isPresent())
@@ -201,7 +203,7 @@ public class Crear_Un_Servicio {
 		try {
 			Runtime.getRuntime().exec("cmd.exe /c mvn serenity:aggregate");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 	}
